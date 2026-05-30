@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chandigarh University Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Reusable SVG icon set used across the dashboard. -->
+    <svg class="icon-sprite" aria-hidden="true">
+      <symbol id="icon-home" viewBox="0 0 24 24">
+        <path d="M3 10.8 12 3l9 7.8v8.4A1.8 1.8 0 0 1 19.2 21H15v-6H9v6H4.8A1.8 1.8 0 0 1 3 19.2v-8.4Z" />
+      </symbol>
+      <symbol id="icon-grid" viewBox="0 0 24 24">
+        <path d="M4 4h6v6H4V4Zm10 0h6v6h-6V4ZM4 14h6v6H4v-6Zm10 0h6v6h-6v-6Z" />
+      </symbol>
+      <symbol id="icon-bank" viewBox="0 0 24 24">
+        <path d="M3 21h18M5 10h14M6 10v8m4-8v8m4-8v8m4-8v8M4 8l8-5 8 5H4Z" />
+      </symbol>
+      <symbol id="icon-book" viewBox="0 0 24 24">
+        <path d="M4 5.4A2.4 2.4 0 0 1 6.4 3H20v16H7.2A3.2 3.2 0 0 0 4 22V5.4Zm0 0A2.6 2.6 0 0 0 6.6 8H20" />
+      </symbol>
+      <symbol id="icon-clipboard" viewBox="0 0 24 24">
+        <path d="M9 5h6m-7 0a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2Zm1 8 2 2 4-5" />
+      </symbol>
+      <symbol id="icon-chart" viewBox="0 0 24 24">
+        <path d="M4 20V4m0 16h16M8 17v-6m4 6V7m4 10v-9m4 9v-4" />
+      </symbol>
+      <symbol id="icon-users" viewBox="0 0 24 24">
+        <path d="M16 19a4 4 0 0 0-8 0M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7 8a3 3 0 0 0-4-2.83M17 4.2a3 3 0 0 1 0 5.6M5 19a3 3 0 0 1 4-2.83M7 4.2a3 3 0 0 0 0 5.6" />
+      </symbol>
+      <symbol id="icon-settings" viewBox="0 0 24 24">
+        <path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Zm8.2-3.2a7.7 7.7 0 0 0-.1-1.1l2-1.5-2-3.5-2.4 1a8 8 0 0 0-1.9-1.1L15.5 3h-4l-.4 2.8a8 8 0 0 0-1.9 1.1l-2.4-1-2 3.5 2 1.5a7.7 7.7 0 0 0 0 2.2l-2 1.5 2 3.5 2.4-1a8 8 0 0 0 1.9 1.1l.4 2.8h4l.4-2.8a8 8 0 0 0 1.9-1.1l2.4 1 2-3.5-2-1.5c.1-.4.1-.7.1-1.1Z" />
+      </symbol>
+      <symbol id="icon-bell" viewBox="0 0 24 24">
+        <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4" />
+      </symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24">
+        <path d="m21 21-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" />
+      </symbol>
+      <symbol id="icon-calendar" viewBox="0 0 24 24">
+        <path d="M7 3v4m10-4v4M4 9h16M6 5h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm3 8h2m4 0h2m-8 4h2m4 0h2" />
+      </symbol>
+      <symbol id="icon-cap" viewBox="0 0 24 24">
+        <path d="m3 8 9-5 9 5-9 5-9-5Zm4 3.2V16c2.5 2 7.5 2 10 0v-4.8M21 8v6" />
+      </symbol>
+      <symbol id="icon-file" viewBox="0 0 24 24">
+        <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6Zm0 0v6h6M8 13h8M8 17h6" />
+      </symbol>
+      <symbol id="icon-flask" viewBox="0 0 24 24">
+        <path d="M9 3h6M10 3v6l-5.5 9.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3M8 15h8" />
+      </symbol>
+      <symbol id="icon-scale" viewBox="0 0 24 24">
+        <path d="M12 3v18M5 6h14M6 6l-4 7h8L6 6Zm12 0-4 7h8l-4-7ZM8 21h8" />
+      </symbol>
+      <symbol id="icon-camera" viewBox="0 0 24 24">
+        <path d="M4 8h4l1.5-2h5L16 8h4a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Zm8 9a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
+      </symbol>
+      <symbol id="icon-building" viewBox="0 0 24 24">
+        <path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16M8 7h2m2 0h2M8 11h2m2 0h2M8 15h2m2 0h2m4-5h2a2 2 0 0 1 2 2v9M3 21h18" />
+      </symbol>
+    </svg>
+
+    <div class="app-shell">
+      <!-- Header navigation mirrors the supplied university admin screen. -->
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Chandigarh University dashboard">
+          <img class="brand-logo" src="log1.png" alt="Chandigarh University" />
+        </a>
+
+        <nav class="main-nav" aria-label="Primary navigation">
+          <a class="nav-item active" href="#">Home</a>
+          <a class="nav-item" href="#">Dashboard</a>
+          <a class="nav-item" href="#">My Courses</a>
+          <a class="nav-item" href="#">MOOCs Courses</a>
+        </nav>
+
+        <div class="user-tools">
+          <button class="icon-button" aria-label="Notifications">
+            <svg><use href="#icon-bell"></use></svg>
+            <span class="badge">5</span>
+          </button>
+          <button class="profile" aria-label="Open admin menu">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=96&q=80" alt="" />
+            <span>
+              <strong>Admin User</strong>
+              <small>Super Admin</small>
+            </span>
+            <span class="chevron">⌄</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <!-- Welcome hero with campus artwork and date card. -->
+        <section class="welcome-panel">
+          <div>
+            <h1>Welcome back, Admin! <span aria-hidden="true">👋</span></h1>
+            <p>Here's the overall overview of Chandigarh University.</p>
+          </div>
+          <div class="campus-strip" role="img" aria-label="Campus skyline illustration"></div>
+          <div class="date-card">
+            <svg><use href="#icon-calendar"></use></svg>
+            <span><strong>20 May 2025</strong><small>Tuesday</small></span>
+          </div>
+        </section>
+
+        <!-- KPI cards show high-level metrics. -->
+        <section class="stats-grid" aria-label="Dashboard statistics">
+          <article class="stat-card rose">
+            <span class="stat-icon"><svg><use href="#icon-users"></use></svg></span>
+            <div><p>Total Students</p><strong>92,450</strong><small class="positive">↑ 8.6% from last month</small></div>
+          </article>
+          <article class="stat-card blue">
+            <span class="stat-icon"><svg><use href="#icon-cap"></use></svg></span>
+            <div><p>Total Faculty</p><strong>5,246</strong><small class="positive">↑ 6.4% from last month</small></div>
+          </article>
+          <article class="stat-card green">
+            <span class="stat-icon"><svg><use href="#icon-book"></use></svg></span>
+            <div><p>Total Courses</p><strong>1,245</strong><small class="positive">↑ 7.2% from last month</small></div>
+          </article>
+          <article class="stat-card orange">
+            <span class="stat-icon"><svg><use href="#icon-file"></use></svg></span>
+            <div><p>Total Content</p><strong>18,562</strong><small class="positive">↑ 9.3% from last month</small></div>
+          </article>
+          <article class="stat-card purple">
+            <span class="stat-icon"><svg><use href="#icon-clipboard"></use></svg></span>
+            <div><p>Evaluations Pending</p><strong>1,532</strong><small class="negative">↓ 4.2% from last month</small></div>
+          </article>
+        </section>
+
+        <!-- Cluster cards are generated from JavaScript data. -->
+        <section class="section-card cluster-section">
+          <div class="section-head">
+            <h2>Cluster Overview</h2>
+            <button class="small-select">View All Clusters⌄</button>
+          </div>
+          <button class="rail-arrow left" aria-label="Previous cluster">‹</button>
+          <div class="cluster-grid" id="clusterGrid"></div>
+          <button class="rail-arrow right" aria-label="Next cluster">›</button>
+        </section>
+
+        <section class="engagement-grid">
+          <!-- Heatmap values are intentionally visible as quick scan cells. -->
+          <article class="section-card heatmap-panel">
+            <div class="section-head">
+              <div><h2>Student Engagement Heatmap</h2><p>Activity completion status - RYG color coding</p></div>
+            </div>
+            <div class="responsive-table">
+              <table class="heatmap" id="heatmapTable"></table>
+            </div>
+            <div class="status-legend">
+              <span><i class="dot high"></i>High &ge;70%</span>
+              <span><i class="dot partial"></i>Partial 40-69%</span>
+              <span><i class="dot low"></i>Low &lt;40%</span>
+            </div>
+          </article>
+
+          <!-- CO-PO attainment matrix, also generated from JavaScript data. -->
+          <article class="section-card mapping-panel">
+            <div class="section-head">
+              <h2>CO-PO Mapping Attainment</h2>
+              <div class="segmented">
+                <button class="selected">Matrix</button>
+                <button>Target Attainment</button>
+              </div>
+            </div>
+            <div class="responsive-table">
+              <table class="mapping" id="mappingTable"></table>
+            </div>
+            <div class="status-legend">
+              <span><i class="dot high"></i>Achieved &ge;70%</span>
+              <span><i class="dot partial"></i>Partial 50-69%</span>
+              <span><i class="dot low"></i>Gap &lt;50%</span>
+            </div>
+          </article>
+        </section>
+
+        <section class="insight-grid">
+          <!-- SVG stacked bar chart is rendered by JavaScript. -->
+          <article class="section-card chart-panel">
+            <div class="section-head">
+              <div><h2>Content Distribution</h2><p>Understand your course materials breakdown</p></div>
+              <div class="panel-actions">
+                <button class="small-select">All Courses⌄</button>
+                <button class="more-button" aria-label="More options">⋮</button>
+              </div>
+            </div>
+            <div class="legend" id="contentLegend"></div>
+            <svg id="barChart" class="bar-chart" viewBox="0 0 720 240" role="img" aria-label="Content distribution chart"></svg>
+            <a class="report-link" href="#">View detailed report ›</a>
+          </article>
+
+          <!-- Smoothed access-pattern line chart. -->
+          <article class="section-card chart-panel">
+            <div class="section-head">
+              <div><h2>Student Access Pattern</h2><p>Daily course access and content views</p></div>
+              <div class="panel-actions">
+                <button class="small-select">Last 7 Days⌄</button>
+                <button class="more-button" aria-label="More options">⋮</button>
+              </div>
+            </div>
+            <svg id="lineChart" class="line-chart" viewBox="0 0 640 280" role="img" aria-label="Student access pattern chart"></svg>
+          </article>
+
+          <!-- Enrollment table uses native HTML for readability and accessibility. -->
+          <article class="section-card table-panel">
+            <div class="section-head">
+              <h2>Top Departments by Enrollment</h2>
+              <button class="small-select">View All</button>
+            </div>
+            <table>
+              <thead><tr><th>Department</th><th>Students</th><th>Courses</th><th>Completion Rate</th></tr></thead>
+              <tbody id="departmentRows"></tbody>
+            </table>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
