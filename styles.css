@@ -23,6 +23,7 @@
 
 body {
   margin: 0;
+  overflow-x: hidden;
   background:
     radial-gradient(circle at 12% 8%, rgba(47, 134, 255, 0.08), transparent 28%),
     radial-gradient(circle at 82% 18%, rgba(255, 63, 95, 0.07), transparent 28%),
@@ -53,6 +54,7 @@ svg {
 
 .app-shell {
   min-width: 1120px;
+  overflow-x: hidden;
 }
 
 /* Top navigation: fixed red header, logo, nav links, alerts, and profile menu. */
@@ -1745,11 +1747,24 @@ th {
   .welcome-panel {
     grid-template-columns: 1fr;
     gap: 14px;
+    min-height: 0;
+    padding: 18px;
   }
 
   .campus-strip,
   .date-card {
     margin-top: 0;
+  }
+
+  .campus-strip {
+    height: 86px;
+    mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  }
+
+  .date-card {
+    justify-self: start;
+    min-width: 0;
+    width: fit-content;
   }
 
   .filter-bar {
@@ -1776,6 +1791,13 @@ th {
 }
 
 @media (max-width: 760px) {
+  body,
+  .app-shell,
+  .dashboard {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
   .user-tools > .profile span:not(.chevron) {
     display: none;
   }
@@ -1784,10 +1806,46 @@ th {
     padding: 82px 12px 14px;
   }
 
+  .welcome-panel {
+    padding: 16px;
+  }
+
+  .welcome-panel h1 {
+    font-size: clamp(25px, 8vw, 38px);
+    line-height: 1.08;
+  }
+
+  .welcome-panel p {
+    max-width: 34ch;
+    font-size: 16px;
+    line-height: 1.32;
+  }
+
+  .campus-strip {
+    height: 96px;
+    border-radius: 10px;
+    mask-image: linear-gradient(180deg, #000 0 72%, transparent 100%);
+  }
+
+  .date-card {
+    width: 100%;
+    max-width: 220px;
+    padding: 12px 14px;
+  }
+
   .welcome-panel,
-  .filter-bar,
   .analytics-grid {
     grid-template-columns: 1fr;
+  }
+
+  .filter-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .filter-bar .filter-field:last-child {
+    grid-column: 1 / -1;
   }
 
   .cluster-grid {
@@ -1808,47 +1866,53 @@ th {
   .table-panel,
   .heatmap-panel,
   .stacked-panel {
+    max-width: 100%;
     border-radius: 12px;
   }
 
+  .analytics-grid .section-head,
+  .comparison-head {
+    max-width: 100%;
+  }
+
   .filter-field {
-    grid-template-columns: 42px minmax(0, 1fr);
-    min-height: 64px;
-    gap: 2px 12px;
-    padding: 9px 34px 9px 9px;
+    grid-template-columns: 34px minmax(0, 1fr);
+    min-height: 58px;
+    gap: 2px 8px;
+    padding: 8px 28px 8px 8px;
     border-radius: 12px;
     box-shadow: 0 8px 18px rgba(35, 45, 65, 0.035);
   }
 
   .filter-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
   }
 
   .filter-icon svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
   }
 
   .filter-copy span {
-    font-size: 11px;
+    font-size: 10px;
   }
 
   .custom-select-trigger {
-    min-height: 18px;
-    font-size: 14px;
+    min-height: 17px;
+    font-size: 12px;
   }
 
   .filter-field::after {
-    right: 15px;
-    width: 9px;
-    height: 9px;
+    right: 11px;
+    width: 8px;
+    height: 8px;
   }
 
   .custom-select-menu {
-    right: -26px;
-    left: -54px;
+    right: -20px;
+    left: -42px;
     max-height: 210px;
   }
 
@@ -1961,8 +2025,11 @@ th {
   .stacked-chart-frame,
   .chart-frame,
   .comparison-table-wrap,
-  .table-panel {
+  .table-panel,
+  .responsive-table {
     overflow-x: auto;
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
   }
 
   .heatmap-panel .status-legend {
@@ -1993,6 +2060,22 @@ th {
     padding-top: 78px;
   }
 
+  .welcome-panel h1 {
+    font-size: clamp(23px, 9vw, 32px);
+  }
+
+  .welcome-panel p {
+    font-size: 14px;
+  }
+
+  .campus-strip {
+    height: 78px;
+  }
+
+  .date-card {
+    max-width: none;
+  }
+
   .nav-item {
     height: 34px;
     padding-inline: 10px;
@@ -2000,19 +2083,19 @@ th {
   }
 
   .filter-bar {
-    gap: 10px;
-    padding: 12px;
+    gap: 8px;
+    padding: 10px;
   }
 
   .filter-field {
-    grid-template-columns: 36px minmax(0, 1fr);
-    min-height: 58px;
-    padding: 8px 30px 8px 8px;
+    grid-template-columns: 32px minmax(0, 1fr);
+    min-height: 54px;
+    padding: 7px 26px 7px 7px;
   }
 
   .filter-icon {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
   }
 
   .custom-select-trigger {
@@ -2020,8 +2103,8 @@ th {
   }
 
   .custom-select-menu {
-    right: -22px;
-    left: -46px;
+    right: -18px;
+    left: -40px;
   }
 
   .section-head,
@@ -2035,6 +2118,14 @@ th {
 }
 
 @media (max-width: 360px) {
+  .filter-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-bar .filter-field:last-child {
+    grid-column: auto;
+  }
+
   .stats-grid,
   .cluster-grid {
     grid-template-columns: 1fr;
