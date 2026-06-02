@@ -112,27 +112,85 @@
           </div>
         </section>
 
+        <section class="filter-bar" aria-label="Dashboard filters">
+          <label class="filter-field violet">
+            <span class="filter-icon"><svg><use href="#icon-grid"></use></svg></span>
+            <span class="filter-copy"><span>Cluster</span></span>
+            <select id="clusterFilter">
+              <option>All Clusters</option>
+              <option>Engineering</option>
+              <option>Management</option>
+              <option>Sciences</option>
+              <option>Liberal Arts</option>
+            </select>
+          </label>
+          <label class="filter-field blue">
+            <span class="filter-icon"><svg><use href="#icon-building"></use></svg></span>
+            <span class="filter-copy"><span>Institute</span></span>
+            <select id="instituteFilter">
+              <option>All Institutes</option>
+              <option>Institute of Engineering</option>
+              <option>Institute of Management</option>
+              <option>Institute of Sciences</option>
+              <option>Institute of Liberal Arts</option>
+            </select>
+          </label>
+          <label class="filter-field green">
+            <span class="filter-icon"><svg><use href="#icon-cap"></use></svg></span>
+            <span class="filter-copy"><span>Program</span></span>
+            <select id="programFilter">
+              <option>All Programs</option>
+              <option>B.Tech</option>
+              <option>MBA</option>
+              <option>B.Sc</option>
+              <option>BA</option>
+            </select>
+          </label>
+          <label class="filter-field orange">
+            <span class="filter-icon"><svg><use href="#icon-book"></use></svg></span>
+            <span class="filter-copy"><span>Course</span></span>
+            <select id="courseFilter">
+              <option>All Courses</option>
+              <option>Data Structures</option>
+              <option>Business Analytics</option>
+              <option>Applied Physics</option>
+              <option>Communication Studies</option>
+            </select>
+          </label>
+          <label class="filter-field purple">
+            <span class="filter-icon"><svg><use href="#icon-calendar"></use></svg></span>
+            <span class="filter-copy"><span>Semester</span></span>
+            <select id="semesterFilter">
+              <option>All Semesters</option>
+              <option>Semester 1</option>
+              <option>Semester 2</option>
+              <option>Semester 3</option>
+              <option>Semester 4</option>
+            </select>
+          </label>
+        </section>
+
         <!-- KPI cards show high-level metrics. -->
         <section class="stats-grid" aria-label="Dashboard statistics">
-          <article class="stat-card rose">
-            <span class="stat-icon"><svg><use href="#icon-users"></use></svg></span>
-            <div><p>Total Students</p><strong>92,450</strong><small class="positive">↑ 8.6% from last month</small></div>
-          </article>
           <article class="stat-card blue">
-            <span class="stat-icon"><svg><use href="#icon-cap"></use></svg></span>
-            <div><p>Total Faculty</p><strong>5,246</strong><small class="positive">↑ 6.4% from last month</small></div>
+            <span class="stat-icon"><svg><use href="#icon-users"></use></svg></span>
+            <div><p>Total Students</p><strong>92,450</strong><small class="positive"><b>↑ 8.6%</b><span>from last month</span></small></div>
           </article>
           <article class="stat-card green">
-            <span class="stat-icon"><svg><use href="#icon-book"></use></svg></span>
-            <div><p>Total Courses</p><strong>1,245</strong><small class="positive">↑ 7.2% from last month</small></div>
+            <span class="stat-icon"><svg><use href="#icon-cap"></use></svg></span>
+            <div><p>Total Faculty</p><strong>5,246</strong><small class="positive"><b>↑ 6.4%</b><span>from last month</span></small></div>
           </article>
           <article class="stat-card orange">
-            <span class="stat-icon"><svg><use href="#icon-file"></use></svg></span>
-            <div><p>Total Content</p><strong>18,562</strong><small class="positive">↑ 9.3% from last month</small></div>
+            <span class="stat-icon"><svg><use href="#icon-book"></use></svg></span>
+            <div><p>Total Courses</p><strong>1,245</strong><small class="positive"><b>↑ 7.2%</b><span>from last month</span></small></div>
           </article>
           <article class="stat-card purple">
+            <span class="stat-icon"><svg><use href="#icon-file"></use></svg></span>
+            <div><p>Total Content</p><strong>18,562</strong><small class="positive"><b>↑ 9.3%</b><span>from last month</span></small></div>
+          </article>
+          <article class="stat-card rose danger">
             <span class="stat-icon"><svg><use href="#icon-clipboard"></use></svg></span>
-            <div><p>Evaluations Pending</p><strong>1,532</strong><small class="negative">↓ 4.2% from last month</small></div>
+            <div><p>Evaluations Pending</p><strong>1,532</strong><small class="negative"><b>↓ 4.2%</b><span>from last month</span></small></div>
           </article>
         </section>
 
@@ -140,18 +198,108 @@
         <section class="section-card cluster-section">
           <div class="section-head">
             <h2>Cluster Overview</h2>
-            <button class="small-select">View All Clusters⌄</button>
           </div>
           <button class="rail-arrow left" aria-label="Previous cluster">‹</button>
           <div class="cluster-grid" id="clusterGrid"></div>
           <button class="rail-arrow right" aria-label="Next cluster">›</button>
         </section>
 
-        <section class="engagement-grid">
-          <!-- Heatmap values are intentionally visible as quick scan cells. -->
+        <!-- Analytics grid: controls the insight cards below. CSS layout is in .analytics-grid. -->
+        <section class="analytics-grid" aria-label="Dashboard insights">
+          <!-- Top departments card: rows are filled by renderDepartmentTable() in script.js. -->
+          <article class="section-card table-panel">
+            <div class="section-head">
+              <div class="panel-title">
+                <span class="panel-icon"><svg><use href="#icon-bank"></use></svg></span>
+                <h2>Top Departments by Enrollment</h2>
+              </div>
+              <button class="small-select">View All</button>
+            </div>
+            <table>
+              <thead><tr><th>Department</th><th>Students</th><th>Courses</th><th>Completion Rate</th></tr></thead>
+              <tbody id="departmentRows"></tbody>
+            </table>
+          </article>
+
+          <!-- Cluster comparison card: static comparison table styled by .comparison-panel. -->
+          <article class="comparison-panel" aria-label="Cluster comparison">
+            <div class="comparison-head">
+              <div class="panel-title">
+                <span class="panel-icon"><svg><use href="#icon-grid"></use></svg></span>
+                <h2>Cluster Comparison</h2>
+              </div>
+              <span>4 clusters</span>
+            </div>
+            <div class="comparison-table-wrap">
+              <table class="comparison-table">
+                <thead>
+                  <tr>
+                    <th>Name ↕</th>
+                    <th>Students ↕</th>
+                    <th>Engagement ↕</th>
+                    <th>At-Risk ↕</th>
+                    <th>Avg Score ↕</th>
+                    <th>CO-PO Att. ↕</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Engineering</td>
+                    <td>38,240</td>
+                    <td class="metric-good">84%</td>
+                    <td class="metric-risk">398</td>
+                    <td>82%</td>
+                    <td><span class="comparison-progress"><i style="width: 88%"></i></span>88%</td>
+                  </tr>
+                  <tr>
+                    <td>Management</td>
+                    <td>14,760</td>
+                    <td class="metric-warning">70%</td>
+                    <td class="metric-risk">520</td>
+                    <td>68%</td>
+                    <td><span class="comparison-progress warn"><i style="width: 70%"></i></span>70%</td>
+                  </tr>
+                  <tr>
+                    <td>Sciences</td>
+                    <td>7,450</td>
+                    <td class="metric-good">80%</td>
+                    <td class="metric-risk">285</td>
+                    <td>78%</td>
+                    <td><span class="comparison-progress"><i style="width: 82%"></i></span>82%</td>
+                  </tr>
+                  <tr>
+                    <td>Liberal Arts</td>
+                    <td>5,680</td>
+                    <td class="metric-good">76%</td>
+                    <td class="metric-risk">275</td>
+                    <td>74%</td>
+                    <td><span class="comparison-progress warn"><i style="width: 74%"></i></span>74%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <!-- Student access pattern card: line chart is drawn into #lineChart by renderLineChart(). -->
+          <article class="section-card chart-panel">
+            <div class="section-head">
+              <div class="panel-title">
+                <span class="panel-icon"><svg><use href="#icon-chart"></use></svg></span>
+                <div><h2>Student Access Pattern</h2><p>Daily course access and content views</p></div>
+              </div>
+            </div>
+            <div class="chart-frame">
+              <svg id="lineChart" class="line-chart" viewBox="0 0 680 430" preserveAspectRatio="none" role="img" aria-label="Student access pattern chart"></svg>
+            </div>
+          </article>
+
+          <!-- Student engagement heatmap: table cells are generated by renderSimpleMatrix(). -->
           <article class="section-card heatmap-panel">
             <div class="section-head">
-              <div><h2>Student Engagement Heatmap</h2><p>Activity completion status - RYG color coding</p></div>
+              <div class="panel-title">
+                <span class="panel-icon"><svg><use href="#icon-clipboard"></use></svg></span>
+                <div><h2>Student Engagement Heatmap</h2><p>Activity completion status - RYG color coding</p></div>
+              </div>
             </div>
             <div class="responsive-table">
               <table class="heatmap" id="heatmapTable"></table>
@@ -163,63 +311,18 @@
             </div>
           </article>
 
-          <!-- CO-PO attainment matrix, also generated from JavaScript data. -->
-          <article class="section-card mapping-panel">
+          <!-- Activity mix chart: horizontal stacked bars are drawn into #stackedBarChart. -->
+          <article class="section-card stacked-panel">
             <div class="section-head">
-              <h2>CO-PO Mapping Attainment</h2>
-              <div class="segmented">
-                <button class="selected">Matrix</button>
-                <button>Target Attainment</button>
+              <div class="panel-title">
+                <span class="panel-icon"><svg><use href="#icon-chart"></use></svg></span>
+                <div><h2>Activity Completion by Department</h2><p>Stacked values from the engagement heatmap</p></div>
               </div>
             </div>
-            <div class="responsive-table">
-              <table class="mapping" id="mappingTable"></table>
+            <div class="stacked-chart-frame">
+              <svg id="stackedBarChart" class="stacked-chart" viewBox="0 0 720 430" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Activity mix by department horizontal stacked chart"></svg>
+              <div id="stackedTooltip" class="stacked-tooltip" role="status" aria-live="polite"></div>
             </div>
-            <div class="status-legend">
-              <span><i class="dot high"></i>Achieved &ge;70%</span>
-              <span><i class="dot partial"></i>Partial 50-69%</span>
-              <span><i class="dot low"></i>Gap &lt;50%</span>
-            </div>
-          </article>
-        </section>
-
-        <section class="insight-grid">
-          <!-- SVG stacked bar chart is rendered by JavaScript. -->
-          <article class="section-card chart-panel">
-            <div class="section-head">
-              <div><h2>Content Distribution</h2><p>Understand your course materials breakdown</p></div>
-              <div class="panel-actions">
-                <button class="small-select">All Courses⌄</button>
-                <button class="more-button" aria-label="More options">⋮</button>
-              </div>
-            </div>
-            <div class="legend" id="contentLegend"></div>
-            <svg id="barChart" class="bar-chart" viewBox="0 0 720 240" role="img" aria-label="Content distribution chart"></svg>
-            <a class="report-link" href="#">View detailed report ›</a>
-          </article>
-
-          <!-- Smoothed access-pattern line chart. -->
-          <article class="section-card chart-panel">
-            <div class="section-head">
-              <div><h2>Student Access Pattern</h2><p>Daily course access and content views</p></div>
-              <div class="panel-actions">
-                <button class="small-select">Last 7 Days⌄</button>
-                <button class="more-button" aria-label="More options">⋮</button>
-              </div>
-            </div>
-            <svg id="lineChart" class="line-chart" viewBox="0 0 640 280" role="img" aria-label="Student access pattern chart"></svg>
-          </article>
-
-          <!-- Enrollment table uses native HTML for readability and accessibility. -->
-          <article class="section-card table-panel">
-            <div class="section-head">
-              <h2>Top Departments by Enrollment</h2>
-              <button class="small-select">View All</button>
-            </div>
-            <table>
-              <thead><tr><th>Department</th><th>Students</th><th>Courses</th><th>Completion Rate</th></tr></thead>
-              <tbody id="departmentRows"></tbody>
-            </table>
           </article>
         </section>
       </main>
