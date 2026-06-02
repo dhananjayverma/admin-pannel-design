@@ -579,7 +579,36 @@ function renderStackedBarChart() {
   });
 }
 
+// Mobile navigation drawer: opens/closes the primary nav on smaller screens.
+function initNavigationDrawer() {
+  const toggle = $(".drawer-toggle");
+  const nav = $("#primaryNav");
+  const backdrop = $(".drawer-backdrop");
+  if (!toggle || !nav || !backdrop) return;
+
+  const setDrawerOpen = (isOpen) => {
+    toggle.classList.toggle("is-open", isOpen);
+    nav.classList.toggle("is-open", isOpen);
+    document.body.classList.toggle("drawer-open", isOpen);
+    toggle.setAttribute("aria-expanded", String(isOpen));
+    toggle.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+  };
+
+  toggle.addEventListener("click", () => setDrawerOpen(!nav.classList.contains("is-open")));
+  backdrop.addEventListener("click", () => setDrawerOpen(false));
+  nav.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setDrawerOpen(false)));
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setDrawerOpen(false);
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 1180) setDrawerOpen(false);
+  });
+}
+
 // Page startup: enhance controls, apply filters, then render all generated visuals.
+initNavigationDrawer();
 enhanceFilterDropdowns();
 initFilters();
 renderLineChart();
