@@ -783,7 +783,14 @@ function initNavigationDrawer() {
 
   toggle.addEventListener("click", () => setDrawerOpen(!nav.classList.contains("is-open")));
   backdrop.addEventListener("click", () => setDrawerOpen(false));
-  nav.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setDrawerOpen(false)));
+  nav.querySelectorAll(".nav-item").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      nav.querySelectorAll(".nav-item").forEach((item) => item.classList.remove("active"));
+      link.classList.add("active");
+      setDrawerOpen(false);
+    });
+  });
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") setDrawerOpen(false);
@@ -794,77 +801,106 @@ function initNavigationDrawer() {
   });
 }
 
-// Startup KPI animation: briefly shows shuffled values, then restores the real dashboard numbers.
-function animateMetricValues() {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+async function loadNavbar() {
+  const mount = $("#navbarMount");
+  if (!mount) return;
 
-  const metricValues = document.querySelectorAll(".content-metric strong, .stat-card strong");
-  const formatter = new Intl.NumberFormat("en-US");
-  const burstMetricCard = (valueNode) => {
-    const card = valueNode.closest(".content-metric, .stat-card");
-    if (!card) return;
+  const fallbackNavbar = `
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Chandigarh University dashboard">
+        <img class="brand-logo" src="log1.png" alt="Chandigarh University" />
+      </a>
 
-    const burst = document.createElement("span");
-    burst.className = "metric-burst";
+      <button class="drawer-toggle" type="button" aria-label="Open navigation menu" aria-controls="primaryNav" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
-    Array.from({ length: 22 }).forEach((_, index) => {
-      const particle = document.createElement("span");
-      const angle = -170 + (index * 16);
-      const distance = 36 + Math.random() * 54;
-      const size = 5 + Math.random() * 6;
+      <nav class="main-nav" id="primaryNav" aria-label="Primary navigation">
+        <div class="drawer-user">
+          <button class="profile compact-profile" aria-label="Open admin menu">
+            <span class="profile-initials">RS</span>
+            <span>
+              <strong>RS</strong>
+              <small>Site admin</small>
+            </span>
+            <span class="chevron">⌄</span>
+          </button>
+        </div>
 
-      particle.style.setProperty("--x", `${Math.cos(angle * Math.PI / 180) * distance}px`);
-      particle.style.setProperty("--y", `${Math.sin(angle * Math.PI / 180) * distance}px`);
-      particle.style.setProperty("--delay", `${Math.random() * 180}ms`);
-      particle.style.setProperty("--size", `${size}px`);
-      burst.appendChild(particle);
-    });
+        <a class="nav-item" href="#">Home</a>
+        <a class="nav-item" href="#">Dashboard</a>
+        <a class="nav-item" href="#">My courses</a>
+        <a class="nav-item active" href="#">Site administration</a>
+        <a class="nav-item" href="#">MOOCs Courses</a>
+      </nav>
 
-    card.appendChild(burst);
-    window.setTimeout(() => burst.remove(), 1700);
-  };
+      <div class="navbar-actions" aria-label="Toolbar">
+        <div class="theme-tools" aria-label="Theme controls">
+          <button class="plain-icon-button" type="button" aria-label="Light mode">
+            <svg><use href="#icon-sun"></use></svg>
+          </button>
+          <button class="switch-control" type="button" aria-label="Toggle theme">
+            <span></span>
+          </button>
+          <button class="plain-icon-button" type="button" aria-label="Dark mode">
+            <svg><use href="#icon-moon"></use></svg>
+          </button>
+        </div>
 
-  metricValues.forEach((valueNode) => {
-    const finalText = valueNode.textContent.trim();
-    const isPercent = finalText.endsWith("%");
-    const digitText = finalText.replace(/[^\d]/g, "");
-    const finalValue = Number(digitText);
+        <span class="navbar-divider"></span>
 
-    if (!Number.isFinite(finalValue) || digitText.length === 0) return;
+        <button class="plain-icon-button" type="button" aria-label="Courses">
+          <svg><use href="#icon-cap"></use></svg>
+        </button>
+        <button class="plain-icon-button notification-button" type="button" aria-label="Notifications">
+          <svg><use href="#icon-bell"></use></svg>
+          <span class="badge">8</span>
+        </button>
+        <button class="plain-icon-button" type="button" aria-label="Messages">
+          <svg><use href="#icon-message"></use></svg>
+        </button>
 
-    const minValue = isPercent ? 1 : Math.max(1, 10 ** Math.max(digitText.length - 1, 0));
-    const maxValue = isPercent ? 99 : Math.max(minValue, (10 ** digitText.length) - 1);
-    const duration = 1600 + Math.random() * 520;
-    const startTime = performance.now();
+        <span class="navbar-divider"></span>
 
-    const renderRandomValue = () => {
-      const elapsed = performance.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
+        <button class="profile" type="button" aria-label="Open admin menu">
+          <span class="profile-initials">RS</span>
+          <span class="chevron">⌄</span>
+        </button>
 
-      if (progress >= 1) {
-        valueNode.textContent = finalText;
-        valueNode.classList.remove("metric-value-settled");
-        void valueNode.offsetWidth;
-        valueNode.classList.add("metric-value-settled");
-        burstMetricCard(valueNode);
-        return;
-      }
+        <span class="navbar-divider"></span>
 
-      const randomValue = Math.floor(minValue + Math.random() * (maxValue - minValue + 1));
-      valueNode.textContent = isPercent ? `${Math.min(randomValue, 99)}%` : formatter.format(randomValue);
-      requestAnimationFrame(renderRandomValue);
-    };
+        <label class="edit-mode-toggle">
+          <span>Edit mode</span>
+          <input type="checkbox" checked />
+          <i aria-hidden="true"></i>
+        </label>
+      </div>
+    </header>
+    <div class="drawer-backdrop" data-close-drawer></div>
+  `;
 
-    renderRandomValue();
-  });
+  try {
+    const response = await fetch("Navbar.html");
+    if (!response.ok) throw new Error(`Navbar request failed: ${response.status}`);
+    mount.innerHTML = await response.text();
+  } catch (error) {
+    mount.innerHTML = fallbackNavbar;
+    console.warn("Using inline navbar fallback. Open through a local server to load Navbar.html.", error);
+  }
 }
 
-// Page startup: enhance controls, apply filters, then render all generated visuals.
-initNavigationDrawer();
-enhanceFilterDropdowns();
-initFilters();
-animateMetricValues();
-renderLineChart();
-renderDepartmentTable();
-renderSimpleMatrix("#heatmapTable", heatmapColumns, heatmapRows);
-renderStackedBarChart();
+// Page startup: load the shared navbar, enhance controls, apply filters, then render visuals.
+async function initDashboard() {
+  await loadNavbar();
+  initNavigationDrawer();
+  enhanceFilterDropdowns();
+  initFilters();
+  renderLineChart();
+  renderDepartmentTable();
+  renderSimpleMatrix("#heatmapTable", heatmapColumns, heatmapRows);
+  renderStackedBarChart();
+}
+
+initDashboard();
