@@ -1,3 +1,8 @@
+// Immediately apply the saved theme (light or dark) on load to prevent theme flash.
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark-theme");
+}
+
 // Dashboard data: update these arrays/objects to change card, table, filter, and chart values.
 const clusters = [
   { name: "Engineering", students: "38,240", departments: 12, courses: 562, color: "#ff5d66", icon: "icon-building" },
@@ -839,27 +844,27 @@ async function loadNavbar() {
       <div class="navbar-actions" aria-label="Toolbar">
         <div class="theme-tools" aria-label="Theme controls">
           <button class="plain-icon-button" type="button" aria-label="Light mode">
-            <svg><use href="#icon-sun"></use></svg>
+            <svg viewBox="0 0 24 24"><use href="#icon-sun"></use></svg>
           </button>
           <button class="switch-control" type="button" aria-label="Toggle theme">
             <span></span>
           </button>
           <button class="plain-icon-button" type="button" aria-label="Dark mode">
-            <svg><use href="#icon-moon"></use></svg>
+            <svg viewBox="0 0 24 24"><use href="#icon-moon"></use></svg>
           </button>
         </div>
 
         <span class="navbar-divider"></span>
 
         <button class="plain-icon-button" type="button" aria-label="Courses">
-          <svg><use href="#icon-cap"></use></svg>
+          <svg viewBox="0 0 24 24"><use href="#icon-cap"></use></svg>
         </button>
         <button class="plain-icon-button notification-button" type="button" aria-label="Notifications">
-          <svg><use href="#icon-bell"></use></svg>
+          <svg viewBox="0 0 24 24"><use href="#icon-bell"></use></svg>
           <span class="badge">8</span>
         </button>
         <button class="plain-icon-button" type="button" aria-label="Messages">
-          <svg><use href="#icon-message"></use></svg>
+          <svg viewBox="0 0 24 24"><use href="#icon-message"></use></svg>
         </button>
 
         <span class="navbar-divider"></span>
@@ -891,9 +896,31 @@ async function loadNavbar() {
   }
 }
 
+function initTheme() {
+  const body = document.body;
+  const sunBtn = $(".theme-tools button[aria-label='Light mode']");
+  const moonBtn = $(".theme-tools button[aria-label='Dark mode']");
+  const toggleBtn = $(".theme-tools .switch-control");
+
+  const setDark = (isDark) => {
+    if (isDark) {
+      body.classList.add("dark-theme");
+      localStorage.setItem("theme", "dark");
+    } else {
+      body.classList.remove("dark-theme");
+      localStorage.setItem("theme", "light");
+    }
+  };
+
+  sunBtn?.addEventListener("click", () => setDark(false));
+  moonBtn?.addEventListener("click", () => setDark(true));
+  toggleBtn?.addEventListener("click", () => setDark(!body.classList.contains("dark-theme")));
+}
+
 // Page startup: load the shared navbar, enhance controls, apply filters, then render visuals.
 async function initDashboard() {
   await loadNavbar();
+  initTheme();
   initNavigationDrawer();
   enhanceFilterDropdowns();
   initFilters();

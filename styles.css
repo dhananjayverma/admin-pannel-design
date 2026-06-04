@@ -2185,3 +2185,260 @@ th {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================
+   Dark Theme Implementation
+   ========================================== */
+
+/* Smooth transitions for theme toggle switch */
+.switch-control,
+.switch-control span {
+  transition: background 180ms ease, border-color 180ms ease, left 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Dark theme variables override */
+body.dark-theme {
+  --bg: #000000;
+  --surface: #0a0a0c;
+  --line: #18191f;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --soft: #08080a;
+  --shadow: 0 18px 42px rgba(0, 0, 0, 0.8);
+  
+  background:
+    radial-gradient(circle at 12% 8%, rgba(47, 134, 255, 0.08), transparent 28%),
+    radial-gradient(circle at 82% 18%, rgba(255, 63, 95, 0.06), transparent 28%),
+    #000000;
+  color: var(--text);
+}
+
+/* Base text and heading adjustments in dark mode */
+body.dark-theme th,
+body.dark-theme td,
+body.dark-theme .chart-label {
+  color: #94a3b8;
+  fill: #94a3b8;
+}
+
+body.dark-theme .cluster-metric strong,
+body.dark-theme .cluster-title,
+body.dark-theme .content-metric strong,
+body.dark-theme .stat-card strong,
+body.dark-theme h1,
+body.dark-theme h2,
+body.dark-theme .panel-title h2,
+body.dark-theme .panel-title h2 + p {
+  color: #f8fafc;
+}
+
+/* Layout panel adjustments in dark mode */
+body.dark-theme .welcome-panel,
+body.dark-theme .section-card,
+body.dark-theme .chart-panel,
+body.dark-theme .table-panel,
+body.dark-theme .comparison-panel,
+body.dark-theme .stacked-panel {
+  background: var(--surface);
+  border-color: var(--line);
+}
+
+body.dark-theme .welcome-panel {
+  background:
+    linear-gradient(90deg, #120c1a 0%, #0a0a0c 32%, rgba(10, 10, 12, 0.62) 72%, #120c1a 100%),
+    var(--surface);
+}
+
+body.dark-theme .table-panel {
+  background:
+    radial-gradient(circle at 88% 10%, rgba(35, 201, 106, 0.15), transparent 32%),
+    linear-gradient(180deg, var(--surface), var(--soft));
+}
+
+body.dark-theme .comparison-panel {
+  background:
+    radial-gradient(circle at 92% 12%, rgba(38, 184, 197, 0.15), transparent 28%),
+    linear-gradient(180deg, var(--surface), var(--soft));
+}
+
+body.dark-theme .stacked-panel {
+  background:
+    radial-gradient(circle at 88% 10%, rgba(145, 79, 240, 0.15), transparent 32%),
+    linear-gradient(180deg, var(--surface), var(--soft));
+}
+
+body.dark-theme .cluster-section {
+  background:
+    linear-gradient(180deg, rgba(10, 10, 12, 0.98), rgba(8, 8, 10, 0.98)),
+    var(--surface);
+  border-color: var(--line);
+}
+
+body.dark-theme .cluster-card {
+  background:
+    radial-gradient(circle at 14% 18%, color-mix(in srgb, var(--accent), transparent 70%), transparent 36%),
+    linear-gradient(135deg, color-mix(in srgb, var(--accent), transparent 91%) 0%, var(--surface) 48%, color-mix(in srgb, var(--accent), transparent 96%) 100%);
+  border-color: var(--line);
+}
+
+body.dark-theme .content-metric,
+body.dark-theme .stat-card {
+  background:
+    radial-gradient(circle at 12% 10%, color-mix(in srgb, var(--metric-color), transparent 80%), transparent 32%),
+    linear-gradient(135deg, var(--surface) 0%, color-mix(in srgb, var(--metric-color), transparent 94%) 100%);
+  border-color: var(--line);
+}
+
+/* Custom form elements and dropdowns in dark mode */
+body.dark-theme .custom-select-trigger,
+body.dark-theme .date-field input {
+  color: #f8fafc;
+  background: #0a0a0c;
+  border-color: var(--line);
+}
+
+body.dark-theme .filter-field:hover .custom-select-trigger,
+body.dark-theme .filter-field:focus-within .custom-select-trigger,
+body.dark-theme .filter-field.is-open .custom-select-trigger {
+  background: var(--surface);
+  border-color: #3b82f6;
+}
+
+body.dark-theme .custom-select-menu {
+  background: rgba(10, 10, 12, 0.98);
+  border-color: var(--line);
+}
+
+body.dark-theme .custom-select-option {
+  color: #e2e8f0;
+}
+
+body.dark-theme .custom-select-chevron {
+  border-color: #94a3b8;
+}
+
+/* Active filter and labels */
+body.dark-theme .active-filter-row {
+  border-top-color: var(--line);
+}
+
+body.dark-theme .active-filter-label {
+  color: #94a3b8;
+}
+
+body.dark-theme .active-filter-chip {
+  color: #60a5fa;
+  background: rgba(30, 41, 59, 0.5);
+  border-color: #1e3a8a;
+}
+
+body.dark-theme .active-filter-chip button:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+body.dark-theme .filter-reset {
+  color: #94a3b8;
+}
+
+body.dark-theme .filter-reset:hover {
+  color: #38bdf8;
+}
+
+/* Charts and grid lines */
+body.dark-theme .grid-line {
+  stroke: #18191f;
+}
+
+body.dark-theme .stacked-axis {
+  stroke: #18191f;
+}
+
+body.dark-theme .cell-empty {
+  background: var(--surface);
+  color: var(--muted);
+}
+
+body.dark-theme .comparison-table tbody tr {
+  border-top-color: var(--line);
+}
+
+body.dark-theme .comparison-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+body.dark-theme .table-panel tbody tr + tr td {
+  border-top-color: var(--line);
+}
+
+body.dark-theme .small-select,
+body.dark-theme .more-button {
+  color: #f8fafc;
+  background: #0a0a0c;
+  border-color: var(--line);
+}
+
+/* Primary Top Navigation Bar styling in dark mode */
+body.dark-theme .topbar {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 56%),
+    linear-gradient(90deg, #09090b 0%, #000000 100%);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-theme .navbar-divider {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-theme .profile-initials {
+  color: #38bdf8;
+  background: #0a0a0c;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Switch control theme toggle appearance */
+body.dark-theme .switch-control {
+  background: #000000;
+  border-color: #38bdf8;
+}
+
+body.dark-theme .switch-control span {
+  left: 20px;
+  background: #38bdf8;
+}
+
+/* Theme icon highlighting */
+body:not(.dark-theme) .theme-tools .plain-icon-button[aria-label="Light mode"] {
+  color: #eab308; /* yellow-500 */
+  background: rgba(255, 255, 255, 0.18);
+}
+
+body.dark-theme .theme-tools .plain-icon-button[aria-label="Dark mode"] {
+  color: #38bdf8; /* sky-400 */
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* Section headings and filter bar overrides in dark mode */
+body.dark-theme .analytics-grid .section-head,
+body.dark-theme .comparison-head {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--panel-accent), transparent 85%), rgba(10, 10, 12, 0.72) 62%),
+    var(--surface);
+  border-color: color-mix(in srgb, var(--panel-accent), var(--line) 72%);
+}
+
+body.dark-theme .date-card {
+  background: rgba(10, 10, 12, 0.86);
+  border-color: var(--line);
+}
+
+body.dark-theme .filter-bar {
+  background:
+    linear-gradient(135deg, rgba(10, 10, 12, 0.98), rgba(22, 22, 28, 0.96)),
+    linear-gradient(90deg, rgba(232, 36, 39, 0.12), rgba(47, 134, 255, 0.12), rgba(38, 184, 197, 0.12));
+  border-color: var(--line);
+}
+
+body.dark-theme .filter-bar::before {
+  background: var(--line);
+}
