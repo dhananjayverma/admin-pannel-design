@@ -143,6 +143,113 @@ const heatmapRows = [
 
 const heatmapColumns = ["", "VIDEOS", "ASSIGNMENTS", "QUIZZES", "FORUMS", "LECTURE NOTES", "PROJECTS"];
 
+const contentCategories = [
+  { key: "pages", label: "Pages", color: "#3f82f3" },
+  { key: "ppts", label: "PPTs", color: "#8358ef" },
+  { key: "forums", label: "Forums", color: "#f59e0b" },
+  { key: "labs", label: "Lab Manuals", color: "#d97706" },
+];
+
+const contentDailyRows = [
+  { label: "May 20", pages: 4, ppts: 7, forums: 5, labs: 3 },
+  { label: "May 21", pages: 5, ppts: 4, forums: 3, labs: 1 },
+  { label: "May 22", pages: 18, ppts: 17, forums: 17, labs: 6 },
+  { label: "May 23", pages: 40, ppts: 40, forums: 40, labs: 3 },
+  { label: "May 24", pages: 22, ppts: 22, forums: 22, labs: 6 },
+  { label: "May 25", pages: 48, ppts: 45, forums: 48, labs: 27 },
+  { label: "May 26", pages: 46, ppts: 46, forums: 46, labs: 10 },
+  { label: "May 27", pages: 158, ppts: 238, forums: 238, labs: 17 },
+  { label: "May 28", pages: 222, ppts: 318, forums: 310, labs: 5 },
+  { label: "May 29", pages: 210, ppts: 275, forums: 272, labs: 14 },
+  { label: "May 30", pages: 160, ppts: 225, forums: 230, labs: 10 },
+  { label: "May 31", pages: 60, ppts: 98, forums: 100, labs: 17 },
+  { label: "Jun 1", pages: 240, ppts: 322, forums: 268, labs: 11 },
+  { label: "Jun 2", pages: 4, ppts: 16, forums: 18, labs: 1 },
+];
+
+const contentHourlyRows = [
+  { hour: "00:00", pages: 13, ppts: 13, forums: 13, labs: 0 },
+  { hour: "01:00", pages: 4, ppts: 4, forums: 3, labs: 2 },
+  { hour: "02:00", pages: 0, ppts: 0, forums: 0, labs: 0 },
+  { hour: "03:00", pages: 0, ppts: 0, forums: 0, labs: 0 },
+  { hour: "04:00", pages: 1, ppts: 1, forums: 1, labs: 0 },
+  { hour: "05:00", pages: 1, ppts: 1, forums: 1, labs: 0 },
+  { hour: "06:00", pages: 20, ppts: 24, forums: 24, labs: 2 },
+  { hour: "07:00", pages: 13, ppts: 16, forums: 13, labs: 5 },
+  { hour: "08:00", pages: 7, ppts: 12, forums: 12, labs: 0 },
+  { hour: "09:00", pages: 48, ppts: 58, forums: 60, labs: 14 },
+  { hour: "10:00", pages: 167, ppts: 215, forums: 215, labs: 10 },
+  { hour: "11:00", pages: 153, ppts: 222, forums: 211, labs: 10 },
+  { hour: "12:00", pages: 116, ppts: 170, forums: 156, labs: 19 },
+  { hour: "13:00", pages: 106, ppts: 141, forums: 137, labs: 10 },
+  { hour: "14:00", pages: 138, ppts: 185, forums: 168, labs: 17 },
+  { hour: "15:00", pages: 115, ppts: 143, forums: 132, labs: 14 },
+  { hour: "16:00", pages: 82, ppts: 126, forums: 128, labs: 6 },
+  { hour: "17:00", pages: 14, ppts: 20, forums: 20, labs: 1 },
+  { hour: "18:00", pages: 30, ppts: 31, forums: 31, labs: 3 },
+  { hour: "19:00", pages: 42, ppts: 57, forums: 57, labs: 3 },
+  { hour: "20:00", pages: 21, ppts: 31, forums: 31, labs: 2 },
+  { hour: "21:00", pages: 47, ppts: 62, forums: 60, labs: 2 },
+  { hour: "22:00", pages: 63, ppts: 86, forums: 85, labs: 3 },
+  { hour: "23:00", pages: 45, ppts: 60, forums: 60, labs: 9 },
+];
+
+const subpartRows = [
+  { key: "outcomes", label: "Outcomes", value: 1301, color: "#10b981" },
+  { key: "pages", label: "Pages", value: 1237, color: "#3f82f3" },
+  { key: "forum", label: "Forum", value: 1617, color: "#8358ef" },
+  { key: "video", label: "Video", value: 117, color: "#f59e0b" },
+  { key: "references", label: "References", value: 1903, color: "#e0529c" },
+  { key: "labs", label: "Lab Manuals", value: 131, color: "#d97706" },
+  { key: "pptTokens", label: "PPT Tokens", value: 8612134, color: "#6366f1" },
+  { key: "pageTokens", label: "Page Tokens", value: 5835296, color: "#14b8a6" },
+];
+
+const comparisonRows = [
+  { label: "Mechanical Engineering", pages: 258, ppts: 370, forums: 376, labs: 33 },
+  { label: "Computer Science\nEngineering", pages: 270, ppts: 220, forums: 221, labs: 4 },
+  { label: "Aerospace Engineering", pages: 250, ppts: 280, forums: 280, labs: 0 },
+  { label: "Biotechnology Engg", pages: 76, ppts: 139, forums: 140, labs: 0 },
+  { label: "Food Technology Engg", pages: 64, ppts: 115, forums: 115, labs: 1 },
+  { label: "Chemical Engineering", pages: 79, ppts: 88, forums: 89, labs: 1 },
+  { label: "Unknown", pages: 65, ppts: 66, forums: 66, labs: 36 },
+  { label: "CSE-AIT", pages: 43, ppts: 65, forums: 67, labs: 15 },
+  { label: "Education", pages: 50, ppts: 76, forums: 76, labs: 0 },
+  { label: "Automobile Engineering", pages: 52, ppts: 53, forums: 53, labs: 15 },
+  { label: "Electrical Engineering", pages: 36, ppts: 65, forums: 66, labs: 5 },
+  { label: "Electronics and\nCommunicatio...", pages: 45, ppts: 54, forums: 27, labs: 0 },
+  { label: "Pharmaceutical Sciences", pages: 28, ppts: 53, forums: 0, labs: 9 },
+  { label: "Management", pages: 27, ppts: 31, forums: 30, labs: 0 },
+  { label: "Physiotherapy", pages: 23, ppts: 18, forums: 18, labs: 9 },
+];
+
+const facultyPerformanceRows = [
+  ["Gursimran Kaur", "e16567", "Engineering", "Computer Science", "CONT_24SMT-341 :: PROBABILITY AN...", "CONT_24SMT-341", "Unit 1", 21, 21, 21, 0, 24],
+  ["Suman Debnath", "e11804", "Engineering", "Mechanical Engineering", "CONT_25MET-222 :: ENGINEERING TH...", "CONT_25MET-222", "Unit 1", 19, 19, 19, 0, 19],
+  ["Gurpreet Singh", "e2560", "Engineering", "Mechanical Engineering", "CONT_24MEH-323 :: FLUID MECHANIC...", "CONT_24MEH-323", "Unit 3", 20, 20, 20, 0, 19],
+  ["Gurpreet Singh", "e2560", "Engineering", "Mechanical Engineering", "CONT_24MEH-323 :: FLUID MECHANIC...", "CONT_24MEH-323", "Unit 1", 20, 19, 20, 0, 19],
+  ["Showket Ahmad M...", "e12366", "Education", "Education", "CONT_25EDT-206 :: SOCIO-ECONOMI...", "CONT_25EDT-206", "Unit 1", 22, 22, 22, 0, 18],
+  ["Parveen Kumar Sai...", "e13339", "Engineering", "Computer Science", "CONT_24CST-352 :: MOBILE APP USER...", "CONT_24CST-352", "Unit 1", 15, 15, 15, 0, 18],
+  ["Gurpreet Singh", "e2560", "Engineering", "Mechanical Engineering", "CONT_24MEH-323 :: FLUID MECHANIC...", "CONT_24MEH-323", "Unit 2", 20, 19, 20, 0, 18],
+  ["Narinder Singh Kha...", "e1738", "Engineering", "Mechanical Engineering", "CONT_24MET-331 :: ENGINEERING EC...", "CONT_24MET-331", "Unit 1", 16, 15, 16, 0, 17],
+  ["Tarunpreet Singh", "e20192", "Engineering", "Aerospace Engineering", "CONT_23AST-402 :: PROFESSIONAL E...", "CONT_23AST-402", "Unit 2", 16, 16, 16, 0, 16],
+  ["Sanjeev Kumar Dha...", "e16511", "Engineering", "Aerospace Engineering", "CONT_25ASH-211 :: STRENGTH OF MA...", "CONT_25ASH-211", "Unit 1", 16, 16, 16, 0, 16],
+  ["G Prasad", "e14018", "Engineering", "Aerospace Engineering", "CONT_26AST-620 :: AEROSPACE STRU...", "CONT_26AST-620", "Unit 1", 13, 15, 15, 0, 16],
+  ["Tarunpreet Singh", "e20192", "Engineering", "Aerospace Engineering", "CONT_23AST-402 :: PROFESSIONAL E...", "CONT_23AST-402", "Unit 1", 16, 16, 16, 0, 16],
+  ["Parveen Kumar Sai...", "e13339", "Engineering", "Computer Science", "CONT_24CST-352 :: MOBILE APP USER...", "CONT_24CST-352", "Unit 2", 15, 15, 15, 0, 15],
+  ["Gursimran Kaur", "e16567", "Engineering", "Computer Science", "CONT_24SMT-341 :: PROBABILITY AN...", "CONT_24SMT-341", "Unit 2", 15, 20, 20, 0, 15],
+  ["Tarunpreet Singh", "e20192", "Engineering", "Aerospace Engineering", "CONT_24AST-311 :: COMBUSTION THE...", "CONT_24AST-311", "Unit 1", 15, 15, 15, 0, 15],
+  ["Priyanka Devi", "e16550", "Engineering", "Computer Science", "CONT_23CST-401 :: PARALLEL AND DI...", "CONT_23CST-401", "Unit 2", 15, 15, 15, 0, 15],
+  ["Akant Kumar Singh", "e13980", "Engineering", "Automobile Engineering", "CONT_24AET-334 :: DESIGN FOR AUT...", "CONT_24AET-334", "Unit 1", 15, 15, 15, 0, 15],
+  ["Suman Debnath", "e11804", "Engineering", "Mechanical Engineering", "CONT_25MET-222 :: ENGINEERING TH...", "CONT_25MET-222", "Unit 2", 13, 20, 20, 0, 14],
+  ["Sugandh Gupta", "e13120", "Engineering", "Aerospace Engineering", "CONT_26AST-613 :: SPACE VEHICLES ...", "CONT_26AST-613", "Unit 1", 14, 14, 14, 0, 14],
+  ["Rupinder Singh", "e9373", "Engineering", "Mechanical Engineering", "CONT_25MEH-221 :: STRENGTH OF MA...", "CONT_25MEH-221", "Unit 1", 14, 20, 20, 0, 14],
+  ["Suman Debnath", "e11804", "Engineering", "Mechanical Engineering", "CONT_26MEH-626 :: COMPUTATIONAL...", "CONT_26MEH-626", "Unit 1", 11, 8, 11, 0, 14],
+  ["Vivek Sharma", "e4851", "Engineering", "Mechanical Engineering", "CONT_24MEH-322 :: HEAT TRANSFER", "CONT_24MEH-322", "Unit 1", 14, 15, 15, 0, 14],
+  ["Saubhagya Ranjan ...", "e6075", "Engineering", "Chemical Engineering", "CONT_24CHT-311 :: RENEWABLE ENER...", "CONT_24CHT-311", "Unit 1", 15, 15, 15, 0, 13],
+  ["Tarunpreet Singh", "e20192", "Engineering", "Aerospace Engineering", "CONT_24AST-311 :: COMBUSTION THE...", "CONT_24AST-311", "Unit 2", 12, 15, 15, 0, 12],
+];
+
 // Stacked bar chart data is derived from the Student Engagement Heatmap.
 const stackedActivityColors = ["#1889aa", "#f5a23a", "#704ee6", "#55c8c2", "#9bd81c", "#de8200"];
 const stackedActivitySeries = heatmapColumns.slice(1).map((label, index) => ({
@@ -771,6 +878,519 @@ function renderStackedBarChart() {
   });
 }
 
+function getContentTotals(rows = contentDailyRows) {
+  return Object.fromEntries(
+    contentCategories.map((category) => [
+      category.key,
+      rows.reduce((sum, row) => sum + row[category.key], 0),
+    ])
+  );
+}
+
+function renderOverviewLegend(selector) {
+  const legend = $(selector);
+  if (!legend) return;
+
+  legend.innerHTML = contentCategories
+    .map((category) => `<span><i style="background:${category.color}"></i>${category.label}</span>`)
+    .join("");
+}
+
+function renderMonthlyContentChart() {
+  const svg = $("#monthlyContentChart");
+  if (!svg) return;
+  svg.innerHTML = "";
+
+  const width = 760;
+  const height = 360;
+  const padding = { top: 14, right: 16, bottom: 42, left: 58 };
+  const chartWidth = width - padding.left - padding.right;
+  const chartHeight = height - padding.top - padding.bottom;
+  const maxValue = 1400;
+  const monthRows = ["May 2026", "Jun 2026"].map((label) => {
+    const monthPrefix = label.slice(0, 3);
+    return {
+      label,
+      values: getContentTotals(contentDailyRows.filter((row) => row.label.startsWith(monthPrefix))),
+    };
+  });
+
+  [0, 350, 700, 1050, 1400].forEach((tick) => {
+    const y = padding.top + chartHeight - (tick / maxValue) * chartHeight;
+    svg.appendChild(svgEl("line", { x1: padding.left, x2: width - padding.right, y1: y, y2: y, class: "overview-grid-line" }));
+    const label = svgEl("text", { x: 22, y: y + 5, class: "overview-axis-label" });
+    label.textContent = tick;
+    svg.appendChild(label);
+  });
+
+  monthRows.forEach((month, monthIndex) => {
+    const groupX = padding.left + (monthIndex + 0.5) * (chartWidth / monthRows.length);
+    const barWidth = 20;
+    const gap = 6;
+    const groupWidth = contentCategories.length * barWidth + (contentCategories.length - 1) * gap;
+
+    contentCategories.forEach((category, categoryIndex) => {
+      const value = month.values[category.key];
+      const barHeight = (value / maxValue) * chartHeight;
+      const x = groupX - groupWidth / 2 + categoryIndex * (barWidth + gap);
+      const y = padding.top + chartHeight - barHeight;
+      const rect = svgEl("rect", {
+        x,
+        y,
+        width: barWidth,
+        height: Math.max(barHeight, value ? 2 : 0),
+        rx: 5,
+        fill: category.color,
+      });
+      rect.appendChild(svgEl("title"));
+      rect.querySelector("title").textContent = `${month.label} ${category.label}: ${value}`;
+      svg.appendChild(rect);
+    });
+
+    const text = svgEl("text", { x: groupX, y: height - 14, "text-anchor": "middle", class: "overview-axis-label" });
+    text.textContent = month.label;
+    svg.appendChild(text);
+  });
+
+  svg.appendChild(svgEl("line", { x1: padding.left, x2: width - padding.right, y1: padding.top + chartHeight, y2: padding.top + chartHeight, class: "overview-axis-line" }));
+}
+
+function renderTotalContentDonut() {
+  const svg = $("#totalContentDonut");
+  if (!svg) return;
+  svg.innerHTML = "";
+
+  const totals = getContentTotals();
+  const total = Object.values(totals).reduce((sum, value) => sum + value, 0);
+  const radius = 78;
+  const circumference = 2 * Math.PI * radius;
+  let offset = 0;
+
+  contentCategories.forEach((category) => {
+    const value = totals[category.key];
+    const length = (value / total) * circumference;
+    const circle = svgEl("circle", {
+      cx: 130,
+      cy: 130,
+      r: radius,
+      fill: "none",
+      stroke: category.color,
+      "stroke-width": 38,
+      "stroke-dasharray": `${Math.max(length - 5, 0)} ${circumference}`,
+      "stroke-dashoffset": -offset,
+      "stroke-linecap": "butt",
+      transform: "rotate(-90 130 130)",
+    });
+    circle.appendChild(svgEl("title"));
+    circle.querySelector("title").textContent = `${category.label}: ${value}`;
+    svg.appendChild(circle);
+    offset += length;
+  });
+
+  $("#totalContentCount").textContent = total.toLocaleString("en-US");
+  renderOverviewLegend("#totalContentLegend");
+}
+
+function renderDailyContentChart() {
+  const svg = $("#dailyContentChart");
+  if (!svg) return;
+  svg.innerHTML = "";
+
+  const width = 1200;
+  const height = 350;
+  const padding = { top: 18, right: 8, bottom: 42, left: 54 };
+  const chartWidth = width - padding.left - padding.right;
+  const chartHeight = height - padding.top - padding.bottom;
+  const maxValue = 340;
+
+  [0, 85, 170, 255, 340].forEach((tick) => {
+    const y = padding.top + chartHeight - (tick / maxValue) * chartHeight;
+    svg.appendChild(svgEl("line", { x1: padding.left, x2: width - padding.right, y1: y, y2: y, class: "overview-grid-line" }));
+    const label = svgEl("text", { x: 20, y: y + 5, class: "overview-axis-label" });
+    label.textContent = tick;
+    svg.appendChild(label);
+  });
+
+  const groupWidth = chartWidth / contentDailyRows.length;
+  const barWidth = 9;
+  const gap = 4;
+  const barsWidth = contentCategories.length * barWidth + (contentCategories.length - 1) * gap;
+
+  contentDailyRows.forEach((row, rowIndex) => {
+    const groupLeft = padding.left + rowIndex * groupWidth;
+    const groupCenter = groupLeft + groupWidth / 2;
+
+    contentCategories.forEach((category, categoryIndex) => {
+      const value = row[category.key];
+      const barHeight = (value / maxValue) * chartHeight;
+      const x = groupCenter - barsWidth / 2 + categoryIndex * (barWidth + gap);
+      const y = padding.top + chartHeight - barHeight;
+      const rect = svgEl("rect", {
+        x,
+        y,
+        width: barWidth,
+        height: Math.max(barHeight, value ? 2 : 0),
+        rx: 3,
+        fill: category.color,
+      });
+      rect.appendChild(svgEl("title"));
+      rect.querySelector("title").textContent = `${row.label} ${category.label}: ${value}`;
+      svg.appendChild(rect);
+    });
+
+    if (rowIndex % 2 === 0 || row.label === "Jun 1") {
+      const text = svgEl("text", { x: groupCenter, y: height - 14, "text-anchor": "middle", class: "overview-axis-label" });
+      text.textContent = row.label;
+      svg.appendChild(text);
+    }
+  });
+
+  svg.appendChild(svgEl("line", { x1: padding.left, x2: width - padding.right, y1: padding.top + chartHeight, y2: padding.top + chartHeight, class: "overview-axis-line" }));
+  renderOverviewLegend("#dailyContentLegend");
+}
+
+function renderContentOverview() {
+  renderMonthlyContentChart();
+  renderTotalContentDonut();
+  renderDailyContentChart();
+}
+
+function renderHourlyPeakCards() {
+  const grid = $("#hourlyPeakCards");
+  if (!grid) return;
+
+  const peakClassByKey = {
+    pages: "pages",
+    ppts: "ppts",
+    forums: "forums",
+    labs: "labs",
+  };
+
+  grid.innerHTML = contentCategories
+    .map((category) => {
+      const peak = contentHourlyRows.reduce((best, row) => (row[category.key] > best[category.key] ? row : best), contentHourlyRows[0]);
+      return `
+        <article class="hourly-peak-card ${peakClassByKey[category.key]}">
+          <span>Peak ${category.label}</span>
+          <strong>${peak.hour}</strong>
+          <small>${peak[category.key]} items</small>
+        </article>
+      `;
+    })
+    .join("");
+}
+
+function renderHourlyPatternChart() {
+  const svg = $("#hourlyPatternChart");
+  if (!svg) return;
+  svg.innerHTML = "";
+
+  const width = 1200;
+  const height = 390;
+  const padding = { top: 18, right: 8, bottom: 50, left: 54 };
+  const chartWidth = width - padding.left - padding.right;
+  const chartHeight = height - padding.top - padding.bottom;
+  const maxValue = 240;
+
+  [0, 60, 120, 180, 240].forEach((tick) => {
+    const y = padding.top + chartHeight - (tick / maxValue) * chartHeight;
+    svg.appendChild(svgEl("line", { x1: padding.left, x2: width - padding.right, y1: y, y2: y, class: "overview-grid-line" }));
+    const label = svgEl("text", { x: 20, y: y + 5, class: "overview-axis-label" });
+    label.textContent = tick;
+    svg.appendChild(label);
+  });
+
+  const groupWidth = chartWidth / contentHourlyRows.length;
+  const barWidth = 7;
+  const gap = 5;
+  const barsWidth = contentCategories.length * barWidth + (contentCategories.length - 1) * gap;
+
+  contentHourlyRows.forEach((row, rowIndex) => {
+    const groupLeft = padding.left + rowIndex * groupWidth;
+    const groupCenter = groupLeft + groupWidth / 2;
+
+    contentCategories.forEach((category, categoryIndex) => {
+      const value = row[category.key];
+      const barHeight = (value / maxValue) * chartHeight;
+      const x = groupCenter - barsWidth / 2 + categoryIndex * (barWidth + gap);
+      const y = padding.top + chartHeight - barHeight;
+      const rect = svgEl("rect", {
+        x,
+        y,
+        width: barWidth,
+        height: Math.max(barHeight, value ? 2 : 0),
+        rx: 3,
+        fill: category.color,
+      });
+      rect.appendChild(svgEl("title"));
+      rect.querySelector("title").textContent = `${row.hour} ${category.label}: ${value}`;
+      svg.appendChild(rect);
+    });
+
+    if (rowIndex % 3 === 0) {
+      const text = svgEl("text", { x: groupCenter, y: height - 16, "text-anchor": "middle", class: "overview-axis-label" });
+      text.textContent = row.hour;
+      svg.appendChild(text);
+    }
+  });
+
+  svg.appendChild(svgEl("line", { x1: padding.left, x2: width - padding.right, y1: padding.top + chartHeight, y2: padding.top + chartHeight, class: "overview-axis-line" }));
+  renderOverviewLegend("#hourlyContentLegend");
+}
+
+function renderHourlyPattern() {
+  renderHourlyPeakCards();
+  renderHourlyPatternChart();
+}
+
+function formatCompactNumber(value) {
+  return value.toLocaleString("en-US");
+}
+
+function renderSubpartsLegend() {
+  const legend = $("#subpartsLegend");
+  if (!legend) return;
+
+  legend.innerHTML = subpartRows
+    .map(
+      (row) => `
+        <span>
+          <i style="background:${row.color}"></i>
+          ${row.label}
+          <strong>${formatCompactNumber(row.value)}</strong>
+        </span>
+      `
+    )
+    .join("");
+}
+
+function renderSubpartsChart() {
+  const svg = $("#subpartsChart");
+  if (!svg) return;
+  svg.innerHTML = "";
+
+  const width = 1200;
+  const height = 310;
+  const padding = { top: 24, right: 18, bottom: 34, left: 110 };
+  const chartWidth = width - padding.left - padding.right;
+  const chartHeight = height - padding.top - padding.bottom;
+  const maxValue = 10000000;
+  const rowPitch = chartHeight / subpartRows.length;
+  const barHeight = 30;
+
+  [0, 2500000, 5000000, 7500000, 10000000].forEach((tick) => {
+    const x = padding.left + (tick / maxValue) * chartWidth;
+    svg.appendChild(svgEl("line", { x1: x, x2: x, y1: padding.top, y2: padding.top + chartHeight, class: "overview-grid-line vertical" }));
+    const label = svgEl("text", { x, y: height - 8, "text-anchor": "middle", class: "overview-axis-label" });
+    label.textContent = tick;
+    svg.appendChild(label);
+  });
+
+  subpartRows.forEach((row, index) => {
+    const y = padding.top + index * rowPitch + (rowPitch - barHeight) / 2;
+    const label = svgEl("text", { x: padding.left - 8, y: y + barHeight / 2 + 5, "text-anchor": "end", class: "breakdown-label" });
+    label.textContent = row.label;
+    svg.appendChild(label);
+
+    const barWidth = (row.value / maxValue) * chartWidth;
+    const rect = svgEl("rect", {
+      x: padding.left,
+      y,
+      width: Math.max(barWidth, row.value ? 1 : 0),
+      height: barHeight,
+      rx: 4,
+      fill: row.color,
+    });
+    rect.appendChild(svgEl("title"));
+    rect.querySelector("title").textContent = `${row.label}: ${formatCompactNumber(row.value)}`;
+    svg.appendChild(rect);
+  });
+
+  svg.appendChild(svgEl("line", { x1: padding.left, x2: padding.left, y1: padding.top, y2: padding.top + chartHeight, class: "overview-axis-line" }));
+  svg.appendChild(svgEl("line", { x1: padding.left, x2: width - padding.right, y1: padding.top + chartHeight, y2: padding.top + chartHeight, class: "overview-axis-line" }));
+  renderSubpartsLegend();
+}
+
+function renderComparisonBreakdownChart() {
+  const svg = $("#comparisonBreakdownChart");
+  if (!svg) return;
+  svg.innerHTML = "";
+
+  const width = 1200;
+  const height = 560;
+  const padding = { top: 22, right: 18, bottom: 34, left: 220 };
+  const chartWidth = width - padding.left - padding.right;
+  const chartHeight = height - padding.top - padding.bottom;
+  const maxValue = 380;
+  const rowPitch = chartHeight / comparisonRows.length;
+  const barHeight = 7;
+  const seriesGap = 5;
+  const groupHeight = contentCategories.length * barHeight + (contentCategories.length - 1) * seriesGap;
+
+  [0, 95, 190, 285, 380].forEach((tick) => {
+    const x = padding.left + (tick / maxValue) * chartWidth;
+    svg.appendChild(svgEl("line", { x1: x, x2: x, y1: padding.top, y2: padding.top + chartHeight, class: "overview-grid-line vertical" }));
+    const label = svgEl("text", { x, y: height - 8, "text-anchor": "middle", class: "overview-axis-label" });
+    label.textContent = tick;
+    svg.appendChild(label);
+  });
+
+  comparisonRows.forEach((row, rowIndex) => {
+    const groupY = padding.top + rowIndex * rowPitch + (rowPitch - groupHeight) / 2;
+    const labelLines = row.label.split("\n");
+    labelLines.forEach((line, lineIndex) => {
+      const text = svgEl("text", {
+        x: padding.left - 8,
+        y: groupY + groupHeight / 2 - (labelLines.length - 1) * 6 + lineIndex * 12 + 4,
+        "text-anchor": "end",
+        class: "breakdown-label",
+      });
+      text.textContent = line;
+      svg.appendChild(text);
+    });
+
+    contentCategories.forEach((category, categoryIndex) => {
+      const value = row[category.key];
+      const y = groupY + categoryIndex * (barHeight + seriesGap);
+      const rect = svgEl("rect", {
+        x: padding.left,
+        y,
+        width: Math.max((value / maxValue) * chartWidth, value ? 1 : 0),
+        height: barHeight,
+        rx: 3,
+        fill: category.color,
+      });
+      rect.appendChild(svgEl("title"));
+      rect.querySelector("title").textContent = `${row.label.replace("\n", " ")} ${category.label}: ${value}`;
+      svg.appendChild(rect);
+    });
+  });
+
+  svg.appendChild(svgEl("line", { x1: padding.left, x2: padding.left, y1: padding.top, y2: padding.top + chartHeight, class: "overview-axis-line" }));
+  svg.appendChild(svgEl("line", { x1: padding.left, x2: width - padding.right, y1: padding.top + chartHeight, y2: padding.top + chartHeight, class: "overview-axis-line" }));
+  renderOverviewLegend("#comparisonBreakdownLegend");
+}
+
+function renderBreakdownSections() {
+  renderSubpartsChart();
+  renderComparisonBreakdownChart();
+}
+
+function renderFacultyPerformanceTable(rows = facultyPerformanceRows) {
+  const body = $("#facultyPerformanceRows");
+  if (!body) return;
+
+  body.innerHTML = rows
+    .map(([name, id, school, dept, course, code, unit, pages, ppts, forums, labs, total]) => {
+      const initial = name.trim().charAt(0).toUpperCase();
+      const schoolClass = school.toLowerCase().replace(/\s+/g, "-");
+      return `
+        <tr>
+          <td>
+            <div class="faculty-person">
+              <span class="faculty-avatar">${initial}</span>
+              <span><strong>${name} .</strong><small>${id}</small></span>
+            </div>
+          </td>
+          <td><span class="faculty-badge school-${schoolClass}">${school}</span></td>
+          <td><span class="faculty-badge dept-badge">${dept}</span></td>
+          <td class="course-cell">${course}</td>
+          <td class="code-cell">${code}</td>
+          <td><span class="unit-badge">${unit}</span></td>
+          <td>${pages}</td>
+          <td>${ppts}</td>
+          <td>${forums}</td>
+          <td>${labs}</td>
+          <td><strong class="total-cell">${total}</strong></td>
+          <td><button class="row-open-button" type="button" aria-label="Open ${name} row">›</button></td>
+        </tr>
+      `;
+    })
+    .join("");
+}
+
+function initFacultyPerformanceSearch() {
+  const input = $("#facultyPerformanceSearch");
+  if (!input) return;
+
+  input.addEventListener("input", () => {
+    const query = input.value.trim().toLowerCase();
+    const filteredRows = facultyPerformanceRows.filter((row) => row.join(" ").toLowerCase().includes(query));
+    renderFacultyPerformanceTable(filteredRows);
+  });
+}
+
+function getDepartmentExplorerRows() {
+  return facultyPerformanceRows.slice(0, 20).map(([name, id, school, dept, course, code, unit, pages, ppts, forums, labs, total]) => ({
+    department: dept,
+    name,
+    id,
+    school,
+    course: course.replace("...", ""),
+    code,
+    unit,
+    count: total,
+  }));
+}
+
+function renderDepartmentExplorerTable(rows = getDepartmentExplorerRows()) {
+  const body = $("#departmentExplorerRows");
+  if (!body) return;
+
+  body.innerHTML = rows
+    .map((row) => {
+      const initial = row.name.trim().charAt(0).toUpperCase();
+      const schoolClass = row.school.toLowerCase().replace(/\s+/g, "-");
+      return `
+        <tr>
+          <td><span class="faculty-badge dept-badge department-name-badge">${row.department}</span></td>
+          <td>
+            <div class="faculty-person compact">
+              <span class="faculty-avatar">${initial}</span>
+              <span><strong>${row.name} .</strong></span>
+            </div>
+          </td>
+          <td><span class="faculty-badge school-${schoolClass}">${row.school}</span></td>
+          <td class="code-cell">${row.id}</td>
+          <td class="course-cell">${row.course}</td>
+          <td class="code-cell">${row.code}</td>
+          <td><span class="unit-badge">${row.unit}</span></td>
+          <td><strong class="content-count-pill">${row.count}</strong></td>
+        </tr>
+      `;
+    })
+    .join("");
+}
+
+function initDepartmentExplorerControls() {
+  const input = $("#departmentExplorerSearch");
+  const select = $("#departmentExplorerFilter");
+  if (!input || !select) return;
+
+  const rows = getDepartmentExplorerRows();
+  [...new Set(rows.map((row) => row.department))].sort().forEach((department) => {
+    const option = document.createElement("option");
+    option.value = department;
+    option.textContent = department;
+    select.appendChild(option);
+  });
+
+  const applyExplorerFilters = () => {
+    const query = input.value.trim().toLowerCase();
+    const department = select.value;
+    renderDepartmentExplorerTable(
+      rows.filter((row) => {
+        const matchesDepartment = !department || row.department === department;
+        const matchesQuery = Object.values(row).join(" ").toLowerCase().includes(query);
+        return matchesDepartment && matchesQuery;
+      })
+    );
+  };
+
+  input.addEventListener("input", applyExplorerFilters);
+  select.addEventListener("change", applyExplorerFilters);
+}
+
 // Mobile navigation drawer: opens/closes the primary nav on smaller screens.
 function initNavigationDrawer() {
   const toggle = $(".drawer-toggle");
@@ -928,6 +1548,13 @@ async function initDashboard() {
   renderDepartmentTable();
   renderSimpleMatrix("#heatmapTable", heatmapColumns, heatmapRows);
   renderStackedBarChart();
+  renderContentOverview();
+  renderHourlyPattern();
+  renderBreakdownSections();
+  renderFacultyPerformanceTable();
+  initFacultyPerformanceSearch();
+  renderDepartmentExplorerTable();
+  initDepartmentExplorerControls();
 }
 
 initDashboard();

@@ -49,6 +49,9 @@
       <symbol id="icon-calendar" viewBox="0 0 24 24">
         <path d="M7 3v4m10-4v4M4 9h16M6 5h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm3 8h2m4 0h2m-8 4h2m4 0h2" />
       </symbol>
+      <symbol id="icon-clock" viewBox="0 0 24 24">
+        <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-14v5l3 2" />
+      </symbol>
       <symbol id="icon-cap" viewBox="0 0 24 24">
         <path d="m3 8 9-5 9 5-9 5-9-5Zm4 3.2V16c2.5 2 7.5 2 10 0v-4.8M21 8v6" />
       </symbol>
@@ -385,6 +388,222 @@
               <div id="stackedTooltip" class="stacked-tooltip" role="status" aria-live="polite"></div>
             </div>
           </article>
+        </section>
+
+        <section class="section-card content-overview-panel" aria-label="Content generation overview">
+          <div class="content-overview-head">
+            <div>
+              <h2>Content Generation Overview</h2>
+              <p>Monthly trends, daily distribution, and total content breakdown</p>
+            </div>
+          </div>
+
+          <div class="content-overview-top">
+            <article class="overview-chart-card monthly-card">
+              <h3>Monthly Trends</h3>
+              <svg id="monthlyContentChart" class="overview-chart" viewBox="0 0 760 360" preserveAspectRatio="none" role="img" aria-label="Monthly content trends chart"></svg>
+            </article>
+
+            <article class="overview-chart-card total-card">
+              <h3>Total Distribution</h3>
+              <div class="donut-wrap">
+                <svg id="totalContentDonut" class="donut-chart" viewBox="0 0 260 260" role="img" aria-label="Total content distribution chart"></svg>
+                <strong id="totalContentCount">0</strong>
+                <span>Total Items</span>
+              </div>
+              <div id="totalContentLegend" class="overview-legend"></div>
+            </article>
+          </div>
+
+          <div class="content-overview-bottom">
+            <div class="daily-chart-title">
+              <h3>Day-wise Distribution</h3>
+              <span>14 days in selected range</span>
+            </div>
+            <svg id="dailyContentChart" class="daily-chart" viewBox="0 0 1200 350" preserveAspectRatio="none" role="img" aria-label="Day-wise content distribution chart"></svg>
+            <div id="dailyContentLegend" class="overview-legend"></div>
+          </div>
+        </section>
+
+        <section class="section-card hourly-pattern-panel" aria-label="Hourly generation pattern">
+          <div class="content-overview-head hourly-pattern-head">
+            <div>
+              <h2>Hourly Generation Pattern</h2>
+              <p>Content generation activity distributed across 24 hours</p>
+            </div>
+            <div class="hourly-controls" aria-label="Hourly chart controls">
+              <div class="segmented-control" aria-label="Chart type">
+                <button class="is-active" type="button">Bar</button>
+                <button type="button">Area</button>
+              </div>
+              <button class="time-range-button" type="button">
+                <svg><use href="#icon-clock"></use></svg>
+                <span>24 Hours</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="hourlyPeakCards" class="hourly-peak-grid"></div>
+
+          <div class="hourly-chart-wrap">
+            <svg id="hourlyPatternChart" class="hourly-chart" viewBox="0 0 1200 390" preserveAspectRatio="none" role="img" aria-label="Hourly content generation grouped bar chart"></svg>
+          </div>
+          <div id="hourlyContentLegend" class="overview-legend"></div>
+        </section>
+
+        <div class="breakdown-row">
+          <section class="section-card subparts-panel" aria-label="Content sub-parts breakdown">
+            <div class="content-overview-head">
+              <div>
+                <h2>Content Sub-Parts Breakdown</h2>
+                <p>Detailed view of 8 content components across all lessons</p>
+              </div>
+            </div>
+            <div class="subparts-chart-wrap">
+              <svg id="subpartsChart" class="subparts-chart" viewBox="0 0 1200 310" preserveAspectRatio="none" role="img" aria-label="Content sub-parts horizontal bar chart"></svg>
+            </div>
+            <div id="subpartsLegend" class="subparts-legend"></div>
+          </section>
+
+          <section class="section-card comparison-breakdown-panel" aria-label="Multi-dimensional content comparison">
+            <div class="content-overview-head">
+              <div>
+                <h2>Multi-Dimensional Comparison</h2>
+                <p>Compare content generation across departments, institutes, clusters, and units</p>
+              </div>
+            </div>
+            <div class="comparison-tabs" aria-label="Comparison dimension tabs">
+              <button class="is-active" type="button">Department</button>
+              <button type="button">Institute</button>
+              <button type="button">Cluster</button>
+              <button type="button">Unit / Practical</button>
+            </div>
+            <div class="comparison-breakdown-wrap">
+              <svg id="comparisonBreakdownChart" class="comparison-breakdown-chart" viewBox="0 0 1200 560" preserveAspectRatio="none" role="img" aria-label="Multi-dimensional department comparison chart"></svg>
+            </div>
+            <div id="comparisonBreakdownLegend" class="overview-legend"></div>
+          </section>
+        </div>
+
+        <section class="section-card faculty-performance-panel" aria-label="Faculty performance breakdown">
+          <div class="faculty-performance-head">
+            <div>
+              <h2>Faculty Performance Breakdown</h2>
+              <p>Bifurcation by faculty, course name, course code, and unit</p>
+            </div>
+            <label class="faculty-search">
+              <svg><use href="#icon-search"></use></svg>
+              <input id="facultyPerformanceSearch" type="search" placeholder="Search faculty, course, unit..." aria-label="Search faculty performance" />
+            </label>
+          </div>
+
+          <div class="faculty-table-wrap">
+            <table class="faculty-table">
+              <thead>
+                <tr>
+                  <th>Faculty <span>↕</span></th>
+                  <th>School <span>↕</span></th>
+                  <th>Dept <span>↕</span></th>
+                  <th>Course Name <span>↕</span></th>
+                  <th>Code <span>↕</span></th>
+                  <th>Unit <span>↕</span></th>
+                  <th>Pages <span>↕</span></th>
+                  <th>PPTs <span>↕</span></th>
+                  <th>Forums <span>↕</span></th>
+                  <th>Labs <span>↕</span></th>
+                  <th>Total <span>↕</span></th>
+                  <th aria-label="Open row"></th>
+                </tr>
+              </thead>
+              <tbody id="facultyPerformanceRows"></tbody>
+            </table>
+          </div>
+          <div class="faculty-table-footer">
+            <p>Showing 1 to 25 of 232 entries</p>
+            <nav class="faculty-pagination" aria-label="Faculty performance pagination">
+              <button type="button" disabled>Prev</button>
+              <button class="is-active" type="button" aria-current="page">1</button>
+              <button type="button">2</button>
+              <button type="button">3</button>
+              <button type="button">4</button>
+              <button type="button">5</button>
+              <span>...</span>
+              <button type="button">Next</button>
+            </nav>
+          </div>
+        </section>
+
+        <section class="section-card department-explorer-panel" aria-label="Department content explorer">
+          <div class="department-explorer-head">
+            <div>
+              <h2>Department Content Explorer</h2>
+              <p>Unique faculty (by e-code), courses, and units with content element counts per department</p>
+            </div>
+            <div class="department-explorer-tools">
+              <label class="faculty-search explorer-search">
+                <svg><use href="#icon-search"></use></svg>
+                <input id="departmentExplorerSearch" type="search" placeholder="Search..." aria-label="Search department content" />
+              </label>
+              <select id="departmentExplorerFilter" class="department-select" aria-label="Filter by department">
+                <option value="">All Departments</option>
+              </select>
+              <button class="export-button" type="button">
+                <svg><use href="#icon-file"></use></svg>
+                Export
+              </button>
+            </div>
+          </div>
+
+          <div class="department-summary-grid" aria-label="Department content summary">
+            <article class="department-summary-card faculty">
+              <span><svg><use href="#icon-users"></use></svg></span>
+              <div><p>Unique Faculty (by E-Code)</p><strong>87</strong></div>
+            </article>
+            <article class="department-summary-card courses">
+              <span><svg><use href="#icon-book"></use></svg></span>
+              <div><p>Unique Courses</p><strong>132</strong></div>
+            </article>
+            <article class="department-summary-card units">
+              <span><svg><use href="#icon-grid"></use></svg></span>
+              <div><p>Unique Units</p><strong>7</strong></div>
+            </article>
+            <article class="department-summary-card total">
+              <span><svg><use href="#icon-database"></use></svg></span>
+              <div><p>Total Content</p><strong>1,317</strong></div>
+            </article>
+          </div>
+
+          <div class="department-table-wrap">
+            <table class="department-table">
+              <thead>
+                <tr>
+                  <th>Department <span>↕</span></th>
+                  <th>Faculty <span>↕</span></th>
+                  <th>School <span>↕</span></th>
+                  <th>E-Code</th>
+                  <th>Course Name <span>↕</span></th>
+                  <th>Course Code</th>
+                  <th>Unit <span>↕</span></th>
+                  <th>Content Count <span>↕</span></th>
+                </tr>
+              </thead>
+              <tbody id="departmentExplorerRows"></tbody>
+            </table>
+          </div>
+
+          <div class="faculty-table-footer department-table-footer">
+            <p>Showing 1-20 of 231</p>
+            <nav class="faculty-pagination" aria-label="Department content pagination">
+              <button type="button" disabled>Prev</button>
+              <button class="is-active" type="button" aria-current="page">1</button>
+              <button type="button">2</button>
+              <button type="button">3</button>
+              <button type="button">4</button>
+              <button type="button">5</button>
+              <span>...</span>
+              <button type="button">Next</button>
+            </nav>
+          </div>
         </section>
       </main>
     </div>
