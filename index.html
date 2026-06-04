@@ -54,6 +54,15 @@
       <symbol id="icon-file" viewBox="0 0 24 24">
         <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6Zm0 0v6h6M8 13h8M8 17h6" />
       </symbol>
+      <symbol id="icon-presentation" viewBox="0 0 24 24">
+        <path d="M4 4h16v11H4V4Zm8 11v5m-4 0h8M8 8h8m-8 4h5" />
+      </symbol>
+      <symbol id="icon-forum" viewBox="0 0 24 24">
+        <path d="M5 5h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9l-5 4v-4H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" />
+      </symbol>
+      <symbol id="icon-percent" viewBox="0 0 24 24">
+        <path d="m19 5-14 14M7.5 8.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm9 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
+      </symbol>
       <symbol id="icon-flask" viewBox="0 0 24 24">
         <path d="M9 3h6M10 3v6l-5.5 9.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3M8 15h8" />
       </symbol>
@@ -134,86 +143,152 @@
         </section>
 
         <section class="filter-bar" aria-label="Dashboard filters">
-          <label class="filter-field violet">
+          <label class="filter-field">
             <span class="filter-icon"><svg><use href="#icon-grid"></use></svg></span>
             <span class="filter-copy"><span>Cluster</span></span>
             <select id="clusterFilter">
               <option>All Clusters</option>
-              <option>Engineering</option>
-              <option>Management</option>
-              <option>Sciences</option>
-              <option>Liberal Arts</option>
             </select>
           </label>
-          <label class="filter-field blue">
+          <label class="filter-field">
+            <span class="filter-icon"><svg><use href="#icon-cap"></use></svg></span>
+            <span class="filter-copy"><span>Faculty / School</span></span>
+            <select id="schoolFilter">
+              <option>All Schools</option>
+            </select>
+          </label>
+          <label class="filter-field">
             <span class="filter-icon"><svg><use href="#icon-building"></use></svg></span>
             <span class="filter-copy"><span>Institute</span></span>
             <select id="instituteFilter">
               <option>All Institutes</option>
-              <option>Institute of Engineering</option>
-              <option>Institute of Management</option>
-              <option>Institute of Sciences</option>
-              <option>Institute of Liberal Arts</option>
             </select>
           </label>
-          <label class="filter-field green">
-            <span class="filter-icon"><svg><use href="#icon-cap"></use></svg></span>
+          <label class="filter-field">
+            <span class="filter-icon"><svg><use href="#icon-bank"></use></svg></span>
+            <span class="filter-copy"><span>Department</span></span>
+            <select id="departmentFilter">
+              <option>All Depts</option>
+            </select>
+          </label>
+          <label class="filter-field">
+            <span class="filter-icon"><svg><use href="#icon-book"></use></svg></span>
             <span class="filter-copy"><span>Program</span></span>
             <select id="programFilter">
               <option>All Programs</option>
-              <option>B.Tech</option>
-              <option>MBA</option>
-              <option>B.Sc</option>
-              <option>BA</option>
             </select>
           </label>
-          <label class="filter-field orange">
-            <span class="filter-icon"><svg><use href="#icon-book"></use></svg></span>
-            <span class="filter-copy"><span>Course</span></span>
-            <select id="courseFilter">
-              <option>All Courses</option>
-              <option>Data Structures</option>
-              <option>Business Analytics</option>
-              <option>Applied Physics</option>
-              <option>Communication Studies</option>
+          <label class="filter-field">
+            <span class="filter-icon"><svg><use href="#icon-users"></use></svg></span>
+            <span class="filter-copy"><span>Faculty</span></span>
+            <select id="facultyFilter">
+              <option>All Faculty</option>
             </select>
           </label>
-          <label class="filter-field purple">
-            <span class="filter-icon"><svg><use href="#icon-calendar"></use></svg></span>
-            <span class="filter-copy"><span>Semester</span></span>
-            <select id="semesterFilter">
-              <option>All Semesters</option>
-              <option>Semester 1</option>
-              <option>Semester 2</option>
-              <option>Semester 3</option>
-              <option>Semester 4</option>
+          <label class="filter-field">
+            <span class="filter-icon"><svg><use href="#icon-settings"></use></svg></span>
+            <span class="filter-copy"><span>Unit</span></span>
+            <select id="unitFilter">
+              <option>All Units</option>
             </select>
           </label>
+          <div class="filter-date-pair">
+            <label class="filter-field date-field">
+              <span class="filter-copy"><span>From</span></span>
+              <input id="fromFilter" type="date" aria-label="From date" />
+              <span class="date-icon"><svg><use href="#icon-calendar"></use></svg></span>
+            </label>
+            <label class="filter-field date-field">
+              <span class="filter-copy"><span>To</span></span>
+              <input id="toFilter" type="date" aria-label="To date" />
+              <span class="date-icon"><svg><use href="#icon-calendar"></use></svg></span>
+            </label>
+          </div>
+          <div class="active-filter-row" aria-live="polite">
+            <div class="active-filter-list">
+              <span class="active-filter-label">Active filters:</span>
+              <div class="active-filter-chips" id="activeFilterChips"></div>
+            </div>
+            <button class="filter-reset" id="resetFilters" type="button">
+              <span aria-hidden="true">↻</span>
+              Reset all
+            </button>
+          </div>
         </section>
 
-        <!-- KPI cards show high-level metrics. -->
-        <section class="stats-grid" aria-label="Dashboard statistics">
-          <article class="stat-card blue">
-            <span class="stat-icon"><svg><use href="#icon-users"></use></svg></span>
-            <div><p>Total Students</p><strong>92,450</strong><small class="positive"><b>↑ 8.6%</b><span>from last month</span></small></div>
-          </article>
-          <article class="stat-card green">
-            <span class="stat-icon"><svg><use href="#icon-cap"></use></svg></span>
-            <div><p>Total Faculty</p><strong>5,246</strong><small class="positive"><b>↑ 6.4%</b><span>from last month</span></small></div>
-          </article>
-          <article class="stat-card orange">
-            <span class="stat-icon"><svg><use href="#icon-book"></use></svg></span>
-            <div><p>Total Courses</p><strong>1,245</strong><small class="positive"><b>↑ 7.2%</b><span>from last month</span></small></div>
-          </article>
-          <article class="stat-card purple">
-            <span class="stat-icon"><svg><use href="#icon-file"></use></svg></span>
-            <div><p>Total Content</p><strong>18,562</strong><small class="positive"><b>↑ 9.3%</b><span>from last month</span></small></div>
-          </article>
-          <article class="stat-card rose danger">
-            <span class="stat-icon"><svg><use href="#icon-clipboard"></use></svg></span>
-            <div><p>Evaluations Pending</p><strong>1,532</strong><small class="negative"><b>↓ 4.2%</b><span>from last month</span></small></div>
-          </article>
-        </section>
+        <div class="metrics-board" aria-label="Dashboard statistics">
+          <section class="content-metrics" aria-label="Content summary">
+            <article class="content-metric blue">
+              <span class="content-metric-icon"><svg><use href="#icon-file"></use></svg></span>
+              <p>Pages</p>
+              <strong>1,237</strong>
+            </article>
+            <article class="content-metric purple">
+              <span class="content-metric-icon"><svg><use href="#icon-presentation"></use></svg></span>
+              <p>PPTs</p>
+              <strong>1,673</strong>
+            </article>
+            <article class="content-metric orange">
+              <span class="content-metric-icon"><svg><use href="#icon-forum"></use></svg></span>
+              <p>Forums</p>
+              <strong>1,617</strong>
+            </article>
+            <article class="content-metric amber">
+              <span class="content-metric-icon"><svg><use href="#icon-flask"></use></svg></span>
+              <p>Lab Manuals</p>
+              <strong>131</strong>
+            </article>
+            <article class="content-metric green">
+              <span class="content-metric-icon"><svg><use href="#icon-cap"></use></svg></span>
+              <p>Total Lessons</p>
+              <strong>1,368</strong>
+            </article>
+            <article class="content-metric cyan">
+              <span class="content-metric-icon"><svg><use href="#icon-users"></use></svg></span>
+              <p>Unique Faculty</p>
+              <strong>87</strong>
+            </article>
+            <article class="content-metric pink">
+              <span class="content-metric-icon"><svg><use href="#icon-book"></use></svg></span>
+              <p>Unique Courses</p>
+              <strong>132</strong>
+            </article>
+            <article class="content-metric indigo">
+              <span class="content-metric-icon"><svg><use href="#icon-clipboard"></use></svg></span>
+              <p>Total Courses</p>
+              <strong>2,435</strong>
+            </article>
+            <article class="content-metric red">
+              <span class="content-metric-icon"><svg><use href="#icon-percent"></use></svg></span>
+              <p>% Initiated</p>
+              <strong>5%</strong>
+            </article>
+          </section>
+
+          <!-- KPI cards show high-level metrics. -->
+          <section class="stats-grid" aria-label="High-level dashboard statistics">
+            <article class="stat-card blue">
+              <span class="stat-icon"><svg><use href="#icon-users"></use></svg></span>
+              <div><p>Total Students</p><strong>92,450</strong></div>
+            </article>
+            <article class="stat-card green">
+              <span class="stat-icon"><svg><use href="#icon-cap"></use></svg></span>
+              <div><p>Total Faculty</p><strong>5,246</strong></div>
+            </article>
+            <article class="stat-card orange">
+              <span class="stat-icon"><svg><use href="#icon-book"></use></svg></span>
+              <div><p>Total Courses</p><strong>1,245</strong></div>
+            </article>
+            <article class="stat-card purple">
+              <span class="stat-icon"><svg><use href="#icon-file"></use></svg></span>
+              <div><p>Total Content</p><strong>18,562</strong></div>
+            </article>
+            <article class="stat-card rose danger">
+              <span class="stat-icon"><svg><use href="#icon-clipboard"></use></svg></span>
+              <div><p>Evaluations Pending</p><strong>1,532</strong></div>
+            </article>
+          </section>
+        </div>
 
         <!-- Cluster cards are generated from JavaScript data. -->
         <section class="section-card cluster-section">

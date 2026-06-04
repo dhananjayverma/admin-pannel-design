@@ -6,56 +6,108 @@ const clusters = [
   { name: "Liberal Arts", students: "5,680", departments: 5, courses: 118, color: "#954de6", icon: "icon-book" },
 ];
 
-const filterCatalog = {
-  Engineering: {
-    institutes: {
-      "University Institute of Engineering": {
-        programs: {
-          "B.Tech CSE": ["Data Structures", "Operating Systems", "Database Management"],
-          "B.Tech Mechanical": ["Thermodynamics", "Machine Design", "Manufacturing Process"],
-        },
-      },
-      "University Institute of Computing": {
-        programs: {
-          "BCA": ["Web Development", "Programming Fundamentals", "Computer Networks"],
-          "MCA": ["Advanced Java", "Cloud Computing", "Software Engineering"],
-        },
-      },
-    },
+const filterRecords = [
+  {
+    cluster: "Engineering",
+    school: "University School of Engineering",
+    institute: "University Institute of Engineering",
+    department: "Computer Science Engineering",
+    program: "B.Tech CSE",
+    faculty: "Faculty of Engineering",
+    unit: "Academic Affairs",
+    date: "2025-05-03",
   },
-  Management: {
-    institutes: {
-      "University School of Business": {
-        programs: {
-          MBA: ["Business Analytics", "Financial Management", "Marketing Strategy"],
-          BBA: ["Principles of Management", "Business Communication", "Accounting"],
-        },
-      },
-    },
+  {
+    cluster: "Engineering",
+    school: "University School of Engineering",
+    institute: "University Institute of Engineering",
+    department: "Mechanical Engineering",
+    program: "B.Tech Mechanical",
+    faculty: "Faculty of Engineering",
+    unit: "Research",
+    date: "2025-05-07",
   },
-  Sciences: {
-    institutes: {
-      "Institute of Sciences": {
-        programs: {
-          "B.Sc Physics": ["Applied Physics", "Quantum Mechanics", "Electromagnetism"],
-          "B.Sc Chemistry": ["Organic Chemistry", "Analytical Chemistry", "Physical Chemistry"],
-        },
-      },
-    },
+  {
+    cluster: "Engineering",
+    school: "University School of Computing",
+    institute: "University Institute of Computing",
+    department: "Computer Applications",
+    program: "BCA",
+    faculty: "Faculty of Engineering",
+    unit: "Admissions",
+    date: "2025-05-11",
   },
-  "Liberal Arts": {
-    institutes: {
-      "Institute of Liberal Arts": {
-        programs: {
-          BA: ["Communication Studies", "Political Thought", "Psychology"],
-          MA: ["Research Methods", "Cultural Studies", "Media Studies"],
-        },
-      },
-    },
+  {
+    cluster: "Engineering",
+    school: "University School of Computing",
+    institute: "University Institute of Computing",
+    department: "Information Technology",
+    program: "MCA",
+    faculty: "Faculty of Engineering",
+    unit: "Examinations",
+    date: "2025-05-15",
   },
-};
-
-const semesters = ["Semester 1", "Semester 2", "Semester 3", "Semester 4", "Semester 5", "Semester 6"];
+  {
+    cluster: "Management",
+    school: "University School of Business",
+    institute: "University School of Business",
+    department: "Management Studies",
+    program: "MBA",
+    faculty: "Faculty of Management",
+    unit: "Academic Affairs",
+    date: "2025-05-18",
+  },
+  {
+    cluster: "Management",
+    school: "University School of Business",
+    institute: "University School of Business",
+    department: "Business Administration",
+    program: "BBA",
+    faculty: "Faculty of Management",
+    unit: "Admissions",
+    date: "2025-05-21",
+  },
+  {
+    cluster: "Sciences",
+    school: "University School of Sciences",
+    institute: "Institute of Sciences",
+    department: "Physics",
+    program: "B.Sc Physics",
+    faculty: "Faculty of Sciences",
+    unit: "Research",
+    date: "2025-05-24",
+  },
+  {
+    cluster: "Sciences",
+    school: "University School of Sciences",
+    institute: "Institute of Sciences",
+    department: "Chemistry",
+    program: "B.Sc Chemistry",
+    faculty: "Faculty of Sciences",
+    unit: "Examinations",
+    date: "2025-05-27",
+  },
+  {
+    cluster: "Liberal Arts",
+    school: "University School of Liberal Arts",
+    institute: "Institute of Liberal Arts",
+    department: "Communication Studies",
+    program: "BA",
+    faculty: "Faculty of Liberal Arts",
+    unit: "Academic Affairs",
+    date: "2025-05-29",
+  },
+  {
+    cluster: "Liberal Arts",
+    school: "University School of Liberal Arts",
+    institute: "Institute of Liberal Arts",
+    department: "Psychology",
+    program: "MA",
+    faculty: "Faculty of Liberal Arts",
+    unit: "Research",
+    date: "2025-06-02",
+  },
+];
 
 // Student Access Pattern line chart data.
 const lineSeries = [
@@ -163,6 +215,7 @@ function enhanceFilterDropdowns() {
     customSelect.className = "custom-select";
     customSelect.innerHTML = `
       <span class="custom-select-trigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0"></span>
+      <span class="custom-select-chevron" aria-hidden="true"></span>
       <ul class="custom-select-menu" role="listbox"></ul>
     `;
     select.after(customSelect);
@@ -234,15 +287,16 @@ function renderClusters(activeClusterNames = clusters.map((cluster) => cluster.n
 // Filter helpers: populate dropdown options and enable/disable dependent filters.
 function setSelectOptions(select, placeholder, values) {
   const currentValue = select.value;
+  const uniqueValues = [...new Set(values)];
   select.innerHTML = `<option value="">${placeholder}</option>`;
-  values.forEach((value) => {
+  uniqueValues.forEach((value) => {
     const option = document.createElement("option");
     option.value = value;
     option.textContent = value;
     select.appendChild(option);
   });
 
-  if (values.includes(currentValue)) {
+  if (uniqueValues.includes(currentValue)) {
     select.value = currentValue;
   }
 
@@ -250,113 +304,246 @@ function setSelectOptions(select, placeholder, values) {
 }
 
 function setFilterState(select, isEnabled) {
+  if (!isEnabled) {
+    select.value = "";
+  }
+
   select.disabled = !isEnabled;
   select.closest(".filter-field").classList.toggle("is-disabled", !isEnabled);
   syncCustomSelect(select);
 }
 
-// Filter state logic: decides which clusters remain active after selections.
-function getSelectedCatalog() {
-  const selectedCluster = $("#clusterFilter").value;
-  const selectedInstitute = $("#instituteFilter").value;
-  const selectedProgram = $("#programFilter").value;
-  const clusterNames = selectedCluster ? [selectedCluster] : Object.keys(filterCatalog);
-  const institutes = clusterNames.flatMap((clusterName) => Object.keys(filterCatalog[clusterName].institutes));
-  const programSources = clusterNames.flatMap((clusterName) => {
-    const clusterInstitutes = filterCatalog[clusterName].institutes;
-    const instituteNames = selectedInstitute ? [selectedInstitute] : Object.keys(clusterInstitutes);
-    return instituteNames
-      .filter((instituteName) => clusterInstitutes[instituteName])
-      .map((instituteName) => clusterInstitutes[instituteName].programs);
-  });
-  const programs = programSources.flatMap((programMap) => Object.keys(programMap));
-  const courses = programSources.flatMap((programMap) => {
-    const programNames = selectedProgram ? [selectedProgram] : Object.keys(programMap);
-    return programNames.filter((programName) => programMap[programName]).flatMap((programName) => programMap[programName]);
-  });
+function setDateFilterState(input, isEnabled) {
+  if (!isEnabled) {
+    input.value = "";
+    input.closest(".date-field").classList.remove("is-invalid");
+  }
 
-  return { institutes, programs, courses };
+  input.disabled = !isEnabled;
+  input.closest(".date-field").classList.toggle("is-disabled", !isEnabled);
 }
 
-function clusterMatchesFilters(clusterName) {
-  const selectedCluster = $("#clusterFilter").value;
-  const selectedInstitute = $("#instituteFilter").value;
-  const selectedProgram = $("#programFilter").value;
-  const selectedCourse = $("#courseFilter").value;
+const filterControls = {
+  cluster: { selector: "#clusterFilter", placeholder: "All Clusters" },
+  school: { selector: "#schoolFilter", placeholder: "All Schools" },
+  institute: { selector: "#instituteFilter", placeholder: "All Institutes" },
+  department: { selector: "#departmentFilter", placeholder: "All Depts" },
+  program: { selector: "#programFilter", placeholder: "All Programs" },
+  faculty: { selector: "#facultyFilter", placeholder: "All Faculty" },
+  unit: { selector: "#unitFilter", placeholder: "All Units" },
+};
 
-  if (selectedCluster && clusterName !== selectedCluster) return false;
+const filterLabels = {
+  cluster: "Cluster",
+  school: "School",
+  institute: "Institute",
+  department: "Department",
+  program: "Program",
+  faculty: "Faculty",
+  unit: "Unit",
+  from: "From",
+  to: "To",
+};
 
-  const instituteMap = filterCatalog[clusterName].institutes;
-  const instituteNames = Object.keys(instituteMap);
-  const matchingInstitutes = selectedInstitute ? [selectedInstitute].filter((name) => instituteMap[name]) : instituteNames;
-  if (selectedInstitute && matchingInstitutes.length === 0) return false;
-
-  const programMaps = matchingInstitutes.map((name) => instituteMap[name].programs);
-  const programNames = programMaps.flatMap((programMap) => Object.keys(programMap));
-  const matchingPrograms = selectedProgram ? [selectedProgram].filter((name) => programNames.includes(name)) : programNames;
-  if (selectedProgram && matchingPrograms.length === 0) return false;
-
-  if (!selectedCourse) return true;
-  return programMaps.some((programMap) =>
-    matchingPrograms.some((programName) => programMap[programName]?.includes(selectedCourse))
+function getFilterSelections() {
+  return Object.fromEntries(
+    Object.entries(filterControls).map(([key, config]) => {
+      const select = $(config.selector);
+      return [key, select.disabled ? "" : select.value];
+    })
   );
 }
 
-function applyFilters(changedFilter) {
-  const clusterSelect = $("#clusterFilter");
-  const instituteSelect = $("#instituteFilter");
-  const programSelect = $("#programFilter");
-  const courseSelect = $("#courseFilter");
-  const semesterSelect = $("#semesterFilter");
+function parseDateInput(value) {
+  const trimmed = value.trim();
+  if (!trimmed) return null;
 
-  if (changedFilter === "cluster") {
-    instituteSelect.value = "";
-    programSelect.value = "";
-    courseSelect.value = "";
-    semesterSelect.value = "";
+  const nativeMatch = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (nativeMatch) {
+    const [, yearValue, monthValue, dayValue] = nativeMatch;
+    const year = Number(yearValue);
+    const month = Number(monthValue);
+    const day = Number(dayValue);
+    const date = new Date(year, month - 1, day);
+    return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day ? date : undefined;
   }
 
-  if (changedFilter === "institute") {
-    programSelect.value = "";
-    courseSelect.value = "";
-    semesterSelect.value = "";
+  const match = trimmed.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/);
+  if (!match) return undefined;
+
+  const [, dayValue, monthValue, yearValue] = match;
+  const day = Number(dayValue);
+  const month = Number(monthValue);
+  const year = Number(yearValue);
+  const date = new Date(year, month - 1, day);
+
+  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
+    return undefined;
   }
 
-  if (changedFilter === "program") {
-    courseSelect.value = "";
-    semesterSelect.value = "";
+  return date;
+}
+
+function formatDateInput(date) {
+  return [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, "0"),
+    String(date.getDate()).padStart(2, "0"),
+  ].join("-");
+}
+
+function getDateRange() {
+  const fromInput = $("#fromFilter");
+  const toInput = $("#toFilter");
+
+  if (fromInput.disabled || toInput.disabled) {
+    return { from: null, to: null, isValid: true };
   }
 
-  if (changedFilter === "course" && !courseSelect.value) {
-    semesterSelect.value = "";
+  const from = parseDateInput(fromInput.value);
+  const to = parseDateInput(toInput.value);
+  const hasInvalidDate = from === undefined || to === undefined;
+  const hasInvalidRange = from instanceof Date && to instanceof Date && from > to;
+
+  fromInput.closest(".date-field").classList.toggle("is-invalid", from === undefined || hasInvalidRange);
+  toInput.closest(".date-field").classList.toggle("is-invalid", to === undefined || hasInvalidRange);
+
+  return {
+    from: from instanceof Date ? from : null,
+    to: to instanceof Date ? to : null,
+    isValid: !hasInvalidDate && !hasInvalidRange,
+  };
+}
+
+function recordMatchesDate(record, range = getDateRange()) {
+  if (!range.isValid) return true;
+  const recordDate = new Date(`${record.date}T00:00:00`);
+  if (range.from && recordDate < range.from) return false;
+  if (range.to && recordDate > range.to) return false;
+  return true;
+}
+
+function recordMatchesSelections(record, selections, ignoredKey = "") {
+  return Object.entries(selections).every(([key, value]) => !value || key === ignoredKey || record[key] === value);
+}
+
+function resetFilterValue(key) {
+  if (filterControls[key]) {
+    const select = $(filterControls[key].selector);
+    select.value = "";
   }
 
-  const { institutes, programs, courses } = getSelectedCatalog();
-  setSelectOptions(instituteSelect, "All Institutes", institutes);
-  setSelectOptions(programSelect, "All Programs", programs);
-  setSelectOptions(courseSelect, "All Courses", courses);
-  setSelectOptions(semesterSelect, "All Semesters", semesters);
+  if (key === "from") $("#fromFilter").value = "";
+  if (key === "to") $("#toFilter").value = "";
 
-  setFilterState(clusterSelect, true);
-  setFilterState(instituteSelect, Boolean(clusterSelect.value));
-  setFilterState(programSelect, Boolean(instituteSelect.value));
-  setFilterState(courseSelect, Boolean(programSelect.value));
-  setFilterState(semesterSelect, Boolean(courseSelect.value));
+  applyFilters();
+}
+
+function resetAllFilters() {
+  Object.values(filterControls).forEach((config) => {
+    $(config.selector).value = "";
+  });
+  $("#fromFilter").value = "";
+  $("#toFilter").value = "";
+  applyFilters();
+}
+
+function renderActiveFilterChips() {
+  const chips = $("#activeFilterChips");
+  const resetButton = $("#resetFilters");
+  if (!chips || !resetButton) return;
+
+  const selections = getFilterSelections();
+  const range = getDateRange();
+  const activeFilters = Object.entries(selections)
+    .filter(([, value]) => Boolean(value))
+    .map(([key, value]) => [key, value]);
+
+  if ($("#fromFilter").value && range.from) activeFilters.push(["from", $("#fromFilter").value]);
+  if ($("#toFilter").value && range.to) activeFilters.push(["to", $("#toFilter").value]);
+
+  chips.innerHTML = "";
+  activeFilters.forEach(([key, value]) => {
+    const chip = document.createElement("span");
+    const label = document.createElement("span");
+    const button = document.createElement("button");
+
+    chip.className = "active-filter-chip";
+    label.textContent = `${filterLabels[key]}: ${value}`;
+    button.type = "button";
+    button.textContent = "×";
+    button.setAttribute("aria-label", `Remove ${filterLabels[key]} filter`);
+    button.addEventListener("click", () => resetFilterValue(key));
+    chip.append(label, button);
+    chips.appendChild(chip);
+  });
+
+  resetButton.disabled = activeFilters.length === 0;
+}
+
+function getFilterValues(key, selections) {
+  const range = getDateRange();
+  return filterRecords
+    .filter((record) => recordMatchesDate(record, range) && recordMatchesSelections(record, selections, key))
+    .map((record) => record[key]);
+}
+
+function clusterMatchesFilters(clusterName) {
+  const selections = getFilterSelections();
+  const range = getDateRange();
+  return filterRecords.some(
+    (record) => record.cluster === clusterName && recordMatchesDate(record, range) && recordMatchesSelections(record, selections)
+  );
+}
+
+function applyFilters() {
+  const refreshOptions = () => {
+    const selections = getFilterSelections();
+    const hasCluster = Boolean(selections.cluster);
+
+    ["#fromFilter", "#toFilter"].forEach((selector) => setDateFilterState($(selector), hasCluster));
+
+    Object.entries(filterControls).forEach(([key, config]) => {
+      const select = $(config.selector);
+      setSelectOptions(select, config.placeholder, getFilterValues(key, selections));
+      setFilterState(select, key === "cluster" || hasCluster);
+    });
+  };
+
+  refreshOptions();
+  refreshOptions();
 
   const activeClusterNames = clusters.filter((cluster) => clusterMatchesFilters(cluster.name)).map((cluster) => cluster.name);
   renderClusters(activeClusterNames);
+  renderActiveFilterChips();
 }
 
 // Filter initialization: wires dropdown change events and renders filtered clusters.
 function initFilters() {
-  setSelectOptions($("#clusterFilter"), "All Clusters", clusters.map((cluster) => cluster.name));
-  applyFilters();
+  Object.values(filterControls).forEach((config) => {
+    $(config.selector).addEventListener("change", applyFilters);
+  });
 
-  $("#clusterFilter").addEventListener("change", () => applyFilters("cluster"));
-  $("#instituteFilter").addEventListener("change", () => applyFilters("institute"));
-  $("#programFilter").addEventListener("change", () => applyFilters("program"));
-  $("#courseFilter").addEventListener("change", () => applyFilters("course"));
-  $("#semesterFilter").addEventListener("change", () => applyFilters("semester"));
+  $("#resetFilters")?.addEventListener("click", resetAllFilters);
+
+  ["#fromFilter", "#toFilter"].forEach((selector) => {
+    const input = $(selector);
+    input.addEventListener("click", () => {
+      input.showPicker?.();
+    });
+    input.addEventListener("change", () => {
+      const date = parseDateInput(input.value);
+      if (date instanceof Date) input.value = formatDateInput(date);
+      applyFilters();
+    });
+    input.addEventListener("blur", () => {
+      const date = parseDateInput(input.value);
+      if (date instanceof Date) input.value = formatDateInput(date);
+      applyFilters();
+    });
+  });
+
+  applyFilters();
 }
 
 // Student Access Pattern renderer: draws the smooth two-line SVG chart.
@@ -607,10 +794,76 @@ function initNavigationDrawer() {
   });
 }
 
+// Startup KPI animation: briefly shows shuffled values, then restores the real dashboard numbers.
+function animateMetricValues() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const metricValues = document.querySelectorAll(".content-metric strong, .stat-card strong");
+  const formatter = new Intl.NumberFormat("en-US");
+  const burstMetricCard = (valueNode) => {
+    const card = valueNode.closest(".content-metric, .stat-card");
+    if (!card) return;
+
+    const burst = document.createElement("span");
+    burst.className = "metric-burst";
+
+    Array.from({ length: 22 }).forEach((_, index) => {
+      const particle = document.createElement("span");
+      const angle = -170 + (index * 16);
+      const distance = 36 + Math.random() * 54;
+      const size = 5 + Math.random() * 6;
+
+      particle.style.setProperty("--x", `${Math.cos(angle * Math.PI / 180) * distance}px`);
+      particle.style.setProperty("--y", `${Math.sin(angle * Math.PI / 180) * distance}px`);
+      particle.style.setProperty("--delay", `${Math.random() * 180}ms`);
+      particle.style.setProperty("--size", `${size}px`);
+      burst.appendChild(particle);
+    });
+
+    card.appendChild(burst);
+    window.setTimeout(() => burst.remove(), 1700);
+  };
+
+  metricValues.forEach((valueNode) => {
+    const finalText = valueNode.textContent.trim();
+    const isPercent = finalText.endsWith("%");
+    const digitText = finalText.replace(/[^\d]/g, "");
+    const finalValue = Number(digitText);
+
+    if (!Number.isFinite(finalValue) || digitText.length === 0) return;
+
+    const minValue = isPercent ? 1 : Math.max(1, 10 ** Math.max(digitText.length - 1, 0));
+    const maxValue = isPercent ? 99 : Math.max(minValue, (10 ** digitText.length) - 1);
+    const duration = 1600 + Math.random() * 520;
+    const startTime = performance.now();
+
+    const renderRandomValue = () => {
+      const elapsed = performance.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      if (progress >= 1) {
+        valueNode.textContent = finalText;
+        valueNode.classList.remove("metric-value-settled");
+        void valueNode.offsetWidth;
+        valueNode.classList.add("metric-value-settled");
+        burstMetricCard(valueNode);
+        return;
+      }
+
+      const randomValue = Math.floor(minValue + Math.random() * (maxValue - minValue + 1));
+      valueNode.textContent = isPercent ? `${Math.min(randomValue, 99)}%` : formatter.format(randomValue);
+      requestAnimationFrame(renderRandomValue);
+    };
+
+    renderRandomValue();
+  });
+}
+
 // Page startup: enhance controls, apply filters, then render all generated visuals.
 initNavigationDrawer();
 enhanceFilterDropdowns();
 initFilters();
+animateMetricValues();
 renderLineChart();
 renderDepartmentTable();
 renderSimpleMatrix("#heatmapTable", heatmapColumns, heatmapRows);
